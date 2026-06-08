@@ -1,4 +1,5 @@
 import React from "react";
+import { Compass, BarChart3, Sprout, TrendingUp, Landmark } from "lucide-react";
 import { T, THEME } from "../theme.js";
 import { Tag, Card, Chapter, P, B, Disclaimer, btn } from "../ui/primitives.jsx";
 import { CountUp } from "../ui/charts.jsx";
@@ -92,10 +93,13 @@ export default function Accueil({ go }) {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px,1fr))", gap: 16, marginBottom: 30 }}>
         {CARDS.map((c) => {
           const th = THEME[c.id];
+          const ThemeIcon = th.Icon;
           return (
             <Card key={c.id} hover accent={th.c} onClick={() => go(c.id)} style={{ display: "flex", flexDirection: "column" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-                <span style={{ fontSize: 30, width: 52, height: 52, borderRadius: 14, display: "grid", placeItems: "center", background: `${th.c}1A`, border: `1px solid ${th.c}33` }}>{th.emoji}</span>
+                <span style={{ width: 52, height: 52, borderRadius: 14, display: "grid", placeItems: "center", background: `${th.c}1A`, border: `1px solid ${th.c}33`, color: th.c }}>
+                  {ThemeIcon && <ThemeIcon size={26} strokeWidth={1.8} />}
+                </span>
                 {c.n > 0 && <span style={{ fontSize: 12, color: T.textFaint, fontWeight: 600 }}>{c.n} {c.id === "outils" ? "outils" : "thématiques"}</span>}
               </div>
               <h3 style={{ margin: "0 0 8px", fontSize: 19, color: T.text, fontWeight: 700 }}>{c.t}</h3>
@@ -108,7 +112,7 @@ export default function Accueil({ go }) {
 
       <Card style={{ background: `linear-gradient(135deg, ${T.surfaceHi}, ${T.surface})`, padding: "clamp(24px,4vw,40px)" }}>
         <div style={{ maxWidth: 680 }}>
-          <Tag color={T.violet}>🧭 Méthode</Tag>
+          <Tag color={T.violet} Icon={Compass}>Méthode</Tag>
           <h2 style={{ fontFamily: T.serif, fontSize: "clamp(22px,3.5vw,30px)", fontWeight: 600, color: T.text, margin: "16px 0 12px" }}>
             Apprendre par étapes : du concret aux concepts
           </h2>
@@ -118,10 +122,10 @@ export default function Accueil({ go }) {
             et les <B>simulateurs</B> te permettent d'appliquer à ta propre situation.
           </P>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 14 }}>
-            <button onClick={() => go("budget")} style={btn(T.brand, true)}>📊 Budget</button>
-            <button onClick={() => go("epargne")} style={btn(T.brand2)}>🌱 Épargne</button>
-            <button onClick={() => go("invest")} style={btn(T.coral)}>📈 Invest</button>
-            <button onClick={() => go("fiscalite")} style={btn(T.accent)}>🏛️ Fiscalité</button>
+            <button onClick={() => go("budget")} style={{ ...btn(T.brand, true), display: "inline-flex", alignItems: "center", gap: 8 }}><BarChart3 size={16} strokeWidth={2} /> Budget</button>
+            <button onClick={() => go("epargne")} style={{ ...btn(T.brand2), display: "inline-flex", alignItems: "center", gap: 8 }}><Sprout size={16} strokeWidth={2} /> Épargne</button>
+            <button onClick={() => go("invest")} style={{ ...btn(T.coral), display: "inline-flex", alignItems: "center", gap: 8 }}><TrendingUp size={16} strokeWidth={2} /> Invest</button>
+            <button onClick={() => go("fiscalite")} style={{ ...btn(T.accent), display: "inline-flex", alignItems: "center", gap: 8 }}><Landmark size={16} strokeWidth={2} /> Fiscalité</button>
           </div>
         </div>
       </Card>

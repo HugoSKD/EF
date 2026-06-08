@@ -1,4 +1,5 @@
 import React from "react";
+import { Scale, Snowflake, Building2, Flame } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
 import { GrowthLine, InflationViz, VizFrame, VizCaption, TwoInvestors } from "../ui/charts.jsx";
@@ -7,7 +8,7 @@ import TopicHub from "./TopicHub.jsx";
 
 const TOPICS = [
   {
-    id: "vs", emoji: "⚖️", title: "Épargne ou investissement ?",
+    id: "vs", Icon: Scale, title: "Épargne ou investissement ?",
     summary: "Deux outils, deux besoins. Savoir quand l'argent doit rester sûr et quand il peut prendre des risques.",
     intro: "Avant de placer le moindre euro, il faut comprendre à quel besoin chaque solution répond.",
     words: 650,
@@ -32,7 +33,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "composes", emoji: "❄️", title: "Les intérêts composés",
+    id: "composes", Icon: Snowflake, title: "Les intérêts composés",
     summary: "Le concept le plus important de toute l'épargne : l'effet boule de neige qui s'envole avec le temps.",
     intro: "Comprendre cet unique mécanisme change radicalement le rapport à l'argent et au temps.",
     words: 900,
@@ -64,7 +65,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "supports", emoji: "🏦", title: "Les supports d'épargne",
+    id: "supports", Icon: Building2, title: "Les supports d'épargne",
     summary: "Livrets, assurance-vie, plans dédiés : comprendre le trio disponibilité / rendement / risque.",
     intro: "Un tour d'horizon des grandes familles de supports, sans recommander de produit précis.",
     words: 850,
@@ -91,7 +92,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "inflation", emoji: "🔥", title: "Inflation & automatisation",
+    id: "inflation", Icon: Flame, title: "Inflation & automatisation",
     summary: "L'ennemi silencieux du pouvoir d'achat, et la stratégie pour épargner sans effort de volonté.",
     intro: "Pourquoi l'argent qui dort s'appauvrit, et comment transformer l'épargne en simple réglage.",
     words: 720,

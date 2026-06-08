@@ -1,4 +1,5 @@
 import React from "react";
+import { Landmark, TrendingDown, Gift } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
 import { BracketBars, VizFrame, VizCaption, DonutChart } from "../ui/charts.jsx";
@@ -7,7 +8,7 @@ import TopicHub from "./TopicHub.jsx";
 
 const TOPICS = [
   {
-    id: "ir", emoji: "🏛️", title: "L'impôt sur le revenu",
+    id: "ir", Icon: Landmark, title: "L'impôt sur le revenu",
     summary: "Comment l'impôt est calculé : tranches, taux marginal, taux moyen. Souvent mal compris.",
     intro: "Le mécanisme par tranches est essentiel à comprendre : tu n'es jamais imposé à 30 % sur tout ton revenu.",
     words: 850,
@@ -39,7 +40,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "flat", emoji: "📉", title: "PFU & revenus du capital",
+    id: "flat", Icon: TrendingDown, title: "PFU & revenus du capital",
     summary: "La « flat tax » à 30 % : comment sont taxés les gains des placements et quand choisir le barème.",
     intro: "Comprendre comment l'État prélève sur tes intérêts, dividendes et plus-values.",
     words: 800,
@@ -79,7 +80,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "reductions", emoji: "🎁", title: "Réductions & niches",
+    id: "reductions", Icon: Gift, title: "Réductions & niches",
     summary: "PER, dons, investissement locatif : comment alléger légitimement son impôt.",
     intro: "L'État utilise la fiscalité pour orienter les comportements. Voici les leviers les plus courants.",
     words: 780,

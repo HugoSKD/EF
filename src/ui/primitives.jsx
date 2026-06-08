@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { Scale, FlaskConical, ChevronRight } from "lucide-react";
 import { T } from "../theme.js";
 
-export function Tag({ children, color = T.brand }) {
+export function Tag({ children, color = T.brand, Icon }) {
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 12.5, fontWeight: 700, letterSpacing: 0.6, textTransform: "uppercase", color, padding: "6px 12px", borderRadius: 999, background: `${color}14`, border: `1px solid ${color}33` }}>
-      <span style={{ width: 6, height: 6, borderRadius: 999, background: color }} />
+    <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 12.5, fontWeight: 700, letterSpacing: 0.6, textTransform: "uppercase", color, padding: "6px 12px", borderRadius: 999, background: `${color}14`, border: `1px solid ${color}33` }}>
+      {Icon ? <Icon size={14} strokeWidth={2} /> : <span style={{ width: 6, height: 6, borderRadius: 999, background: color }} />}
       {children}
     </span>
   );
@@ -64,8 +65,13 @@ export function DeepDive({ title = "Pour aller plus loin", children }) {
   return (
     <div style={{ border: `1px dashed ${T.brand}55`, borderRadius: 14, margin: "20px 0", background: "rgba(94,232,196,0.04)", overflow: "hidden" }}>
       <button onClick={() => setOpen(!open)} style={{ all: "unset", cursor: "pointer", width: "100%", boxSizing: "border-box", padding: "13px 18px", display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{ color: T.brand, fontSize: 16, transform: open ? "rotate(90deg)" : "none", transition: "transform .2s" }}>▸</span>
-        <span style={{ fontSize: 13.5, fontWeight: 700, letterSpacing: 0.4, textTransform: "uppercase", color: T.brand }}>🔬 {title}</span>
+        <span style={{ color: T.brand, display: "inline-flex", transform: open ? "rotate(90deg)" : "none", transition: "transform .2s" }}>
+          <ChevronRight size={16} strokeWidth={2.4} />
+        </span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13.5, fontWeight: 700, letterSpacing: 0.4, textTransform: "uppercase", color: T.brand }}>
+          <FlaskConical size={14} strokeWidth={2} />
+          {title}
+        </span>
       </button>
       <div style={{ maxHeight: open ? 1200 : 0, transition: "max-height .45s ease", overflow: "hidden" }}>
         <div style={{ padding: "0 18px 16px 40px", fontSize: 14.5, lineHeight: 1.7, color: T.textDim }}>{children}</div>
@@ -90,7 +96,9 @@ export function List({ items, color = T.brand }) {
 export function Disclaimer({ compact }) {
   return (
     <div style={{ display: "flex", gap: 14, alignItems: "flex-start", background: T.bgSoft, border: `1px solid ${T.line}`, borderRadius: 14, padding: compact ? "13px 16px" : "18px 20px", margin: "32px 0 8px" }}>
-      <span style={{ fontSize: 18 }}>⚖️</span>
+      <span style={{ flexShrink: 0, color: T.textDim, marginTop: 2 }}>
+        <Scale size={18} strokeWidth={1.8} />
+      </span>
       <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.6, color: T.textDim }}>
         <B>Contenu strictement éducatif.</B> EduFinance n'offre aucun conseil personnalisé ni recommandation
         d'achat de produit financier. Tout investissement comporte un risque de perte. Consultez un
@@ -114,9 +122,10 @@ export function btn(color, filled) {
   };
 }
 
-export function Pill({ children, color = T.textFaint }) {
+export function Pill({ children, color = T.textFaint, Icon }) {
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11.5, fontWeight: 700, color, padding: "3px 9px", borderRadius: 99, background: `${color}15`, border: `1px solid ${color}33` }}>
+      {Icon && <Icon size={12} strokeWidth={2.2} />}
       {children}
     </span>
   );

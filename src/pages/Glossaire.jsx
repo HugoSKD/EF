@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { Search, BookOpen, SearchX } from "lucide-react";
 import { T } from "../theme.js";
 import { Tag, Card } from "../ui/primitives.jsx";
 import { GLOSSARY, GLOSSARY_CATS } from "../data/glossary.js";
@@ -19,7 +20,7 @@ export default function Glossaire() {
   return (
     <div>
       <div style={{ marginBottom: 30, maxWidth: 780 }}>
-        <Tag color={T.brand}>📖&nbsp;&nbsp;Lexique financier</Tag>
+        <Tag color={T.brand} Icon={BookOpen}>Lexique financier</Tag>
         <h1 style={{ fontFamily: T.serif, fontWeight: 600, fontSize: "clamp(34px,6vw,52px)", lineHeight: 1.04, margin: "18px 0 14px", color: T.text, letterSpacing: -0.5 }}>
           Glossaire
         </h1>
@@ -49,7 +50,7 @@ export default function Glossaire() {
             onFocus={(e) => (e.target.style.borderColor = T.brand)}
             onBlur={(e) => (e.target.style.borderColor = T.line)}
           />
-          <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: T.textFaint, pointerEvents: "none", fontSize: 16 }}>🔍</span>
+          <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: T.textFaint, pointerEvents: "none", display: "inline-flex" }}><Search size={16} strokeWidth={2} /></span>
         </div>
       </div>
 
@@ -91,7 +92,7 @@ export default function Glossaire() {
         ))}
         {filtered.length === 0 && (
           <Card style={{ gridColumn: "1 / -1", textAlign: "center", padding: 40 }}>
-            <div style={{ fontSize: 30, marginBottom: 8 }}>🔍</div>
+            <div style={{ display: "inline-flex", marginBottom: 8, color: T.textFaint }}><SearchX size={32} strokeWidth={1.6} /></div>
             <div style={{ fontSize: 16, color: T.textDim }}>Aucun terme trouvé pour « {q} »</div>
           </Card>
         )}

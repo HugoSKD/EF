@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ArrowUp } from "lucide-react";
 import { T } from "../theme.js";
 
 export default function BackToTop() {
@@ -35,7 +36,7 @@ export default function BackToTop() {
         zIndex: 55,
       }}
     >
-      ↑
+      <ArrowUp size={20} strokeWidth={2.2} />
     </button>
   );
 }

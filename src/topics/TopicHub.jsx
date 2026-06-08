@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Clock, Check } from "lucide-react";
 import { T, THEME } from "../theme.js";
 import { Tag, Card, Disclaimer, btn, Pill } from "../ui/primitives.jsx";
 import { useLocalStorage } from "../hooks.js";
@@ -24,6 +25,7 @@ export default function TopicHub({ pageId, topics, openId, onOpen, onBack }) {
     const idx = topics.findIndex((t) => t.id === openId);
     const wordCount = topic.words || 700;
     const minutes = Math.max(2, Math.round(wordCount / 220));
+    const TopicIcon = topic.Icon;
     return (
       <div>
         <button onClick={onBack} style={{ all: "unset", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 8, color: T.textDim, fontSize: 14.5, fontWeight: 600, marginBottom: 22 }}>
@@ -31,9 +33,9 @@ export default function TopicHub({ pageId, topics, openId, onOpen, onBack }) {
         </button>
         <div style={{ marginBottom: 30, maxWidth: 780 }}>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", marginBottom: 14 }}>
-            <Tag color={th.c}>{topic.emoji}&nbsp;&nbsp;Thématique {idx + 1}/{topics.length}</Tag>
-            <Pill color={T.textFaint}>⏱ ~{minutes} min de lecture</Pill>
-            {read[`${pageId}/${openId}`] && <Pill color={T.brand}>✓ Lu</Pill>}
+            <Tag color={th.c} Icon={TopicIcon}>Thématique {idx + 1}/{topics.length}</Tag>
+            <Pill color={T.textFaint} Icon={Clock}>~{minutes} min de lecture</Pill>
+            {read[`${pageId}/${openId}`] && <Pill color={T.brand} Icon={Check}>Lu</Pill>}
           </div>
           <h1 style={{ fontFamily: T.serif, fontWeight: 600, fontSize: "clamp(30px,5.5vw,48px)", lineHeight: 1.05, margin: "8px 0 14px", color: T.text, letterSpacing: -0.5 }}>{topic.title}</h1>
           <p style={{ fontSize: "clamp(15px,2.1vw,18px)", lineHeight: 1.65, color: T.textDim, margin: 0 }}>{topic.intro}</p>
@@ -59,10 +61,11 @@ export default function TopicHub({ pageId, topics, openId, onOpen, onBack }) {
 
   // Vue liste
   const readCount = topics.filter((t) => read[`${pageId}/${t.id}`]).length;
+  const ThemeIcon = th.Icon;
   return (
     <div>
       <div style={{ marginBottom: 34, maxWidth: 780 }}>
-        <Tag color={th.c}>{th.emoji}&nbsp;&nbsp;{th.tag}</Tag>
+        <Tag color={th.c} Icon={ThemeIcon}>{th.tag}</Tag>
         <h1 style={{ fontFamily: T.serif, fontWeight: 600, fontSize: "clamp(34px,6vw,56px)", lineHeight: 1.04, margin: "18px 0 14px", color: T.text, letterSpacing: -0.5 }}>{th.title}</h1>
         <p style={{ fontSize: "clamp(16px,2.2vw,19px)", lineHeight: 1.65, color: T.textDim, margin: 0 }}>{th.intro}</p>
         {readCount > 0 && (
@@ -77,12 +80,15 @@ export default function TopicHub({ pageId, topics, openId, onOpen, onBack }) {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px,1fr))", gap: 16 }}>
         {topics.map((t, i) => {
           const isRead = read[`${pageId}/${t.id}`];
+          const TopicIcon = t.Icon;
           return (
             <Card key={t.id} hover accent={th.c} onClick={() => onOpen(t.id)} style={{ display: "flex", flexDirection: "column" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-                <span style={{ fontSize: 28, width: 50, height: 50, borderRadius: 14, display: "grid", placeItems: "center", background: `${th.c}1A`, border: `1px solid ${th.c}33` }}>{t.emoji}</span>
+                <span style={{ width: 50, height: 50, borderRadius: 14, display: "grid", placeItems: "center", background: `${th.c}1A`, border: `1px solid ${th.c}33`, color: th.c }}>
+                  {TopicIcon ? <TopicIcon size={24} strokeWidth={1.8} /> : null}
+                </span>
                 <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                  {isRead && <span style={{ width: 22, height: 22, borderRadius: 99, background: `${T.brand}22`, color: T.brand, display: "grid", placeItems: "center", fontSize: 11, fontWeight: 800 }}>✓</span>}
+                  {isRead && <span style={{ width: 22, height: 22, borderRadius: 99, background: `${T.brand}22`, color: T.brand, display: "grid", placeItems: "center" }}><Check size={13} strokeWidth={3} /></span>}
                   <span style={{ fontFamily: T.serif, color: T.textFaint, fontSize: 15 }}>0{i + 1}</span>
                 </div>
               </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, Mountain, AlertTriangle, Compass } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
 import { VBars, VizFrame, VizCaption, ScamScatter } from "../ui/charts.jsx";
@@ -7,7 +8,7 @@ import TopicHub from "./TopicHub.jsx";
 
 const TOPICS = [
   {
-    id: "bases", emoji: "🔗", title: "Les bases sans jargon",
+    id: "bases", Icon: Link, title: "Les bases sans jargon",
     summary: "Blockchain, cryptomonnaie, Web3 : enfin des définitions claires pour comprendre de quoi on parle.",
     intro: "Avant de juger, comprendre. Voici les briques de base expliquées simplement.",
     words: 750,
@@ -34,7 +35,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "risques", emoji: "🌋", title: "Pourquoi c'est si risqué",
+    id: "risques", Icon: Mountain, title: "Pourquoi c'est si risqué",
     summary: "Volatilité extrême, faible régulation, erreurs irréversibles : trois risques qui se cumulent.",
     intro: "L'un des domaines les plus dangereux pour un débutant. Voici pourquoi, en détail.",
     words: 820,
@@ -68,7 +69,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "arnaques", emoji: "🚨", title: "Repérer les arnaques",
+    id: "arnaques", Icon: AlertTriangle, title: "Repérer les arnaques",
     summary: "Le sujet le plus important : les signaux d'alerte qui doivent te faire fuir immédiatement.",
     intro: "Les escroqueries sont massives dans ce domaine. Savoir les reconnaître est la meilleure protection.",
     words: 900,
@@ -100,7 +101,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "esprit", emoji: "🧭", title: "Garder l'esprit critique",
+    id: "esprit", Icon: Compass, title: "Garder l'esprit critique",
     summary: "Si on s'y intéresse malgré tout : les précautions de base et les réflexes valables partout.",
     intro: "L'esprit critique est, au fond, le meilleur outil financier qui soit — bien au-delà de la crypto.",
     words: 720,

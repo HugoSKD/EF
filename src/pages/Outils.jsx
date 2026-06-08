@@ -1,13 +1,14 @@
 import React, { useMemo, useState } from "react";
+import { Calculator, Snowflake, PieChart, Home, Clock } from "lucide-react";
 import { T, euro } from "../theme.js";
 import { Tag, Card, Note } from "../ui/primitives.jsx";
 import { CashflowDiagram, VizFrame, VizCaption, Legend } from "../ui/charts.jsx";
 
 const TOOLS = [
-  { id: "composes", label: "Intérêts composés", emoji: "❄️" },
-  { id: "budget", label: "Budget 50/30/20", emoji: "🥧" },
-  { id: "credit", label: "Mensualité crédit", emoji: "🏠" },
-  { id: "early", label: "Commencer tôt", emoji: "⏰" },
+  { id: "composes", label: "Intérêts composés", Icon: Snowflake },
+  { id: "budget", label: "Budget 50/30/20", Icon: PieChart },
+  { id: "credit", label: "Mensualité crédit", Icon: Home },
+  { id: "early", label: "Commencer tôt", Icon: Clock },
 ];
 
 function Slider({ label, value, set, min, max, step, suffix, color = T.brand }) {
@@ -280,7 +281,7 @@ export default function Outils() {
   return (
     <div>
       <div style={{ marginBottom: 30, maxWidth: 780 }}>
-        <Tag color={T.accent}>🧮&nbsp;&nbsp;Boîte à outils</Tag>
+        <Tag color={T.accent} Icon={Calculator}>Boîte à outils</Tag>
         <h1 style={{ fontFamily: T.serif, fontWeight: 600, fontSize: "clamp(34px,6vw,52px)", lineHeight: 1.04, margin: "18px 0 14px", color: T.text, letterSpacing: -0.5 }}>
           Simulateurs interactifs
         </h1>
@@ -290,26 +291,29 @@ export default function Outils() {
       </div>
 
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
-        {TOOLS.map((t) => (
-          <button key={t.id} onClick={() => setActive(t.id)}
-            style={{
-              background: active === t.id ? T.surfaceHi : T.surface,
-              color: active === t.id ? T.text : T.textDim,
-              border: `1px solid ${active === t.id ? T.accent + "55" : T.line}`,
-              borderRadius: 12,
-              padding: "11px 18px",
-              fontSize: 14.5,
-              fontWeight: 600,
-              cursor: "pointer",
-              transition: "all .2s",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-            }}>
-            <span style={{ fontSize: 17 }}>{t.emoji}</span>
-            {t.label}
-          </button>
-        ))}
+        {TOOLS.map((t) => {
+          const ToolIcon = t.Icon;
+          return (
+            <button key={t.id} onClick={() => setActive(t.id)}
+              style={{
+                background: active === t.id ? T.surfaceHi : T.surface,
+                color: active === t.id ? T.text : T.textDim,
+                border: `1px solid ${active === t.id ? T.accent + "55" : T.line}`,
+                borderRadius: 12,
+                padding: "11px 18px",
+                fontSize: 14.5,
+                fontWeight: 600,
+                cursor: "pointer",
+                transition: "all .2s",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+              }}>
+              <ToolIcon size={17} strokeWidth={1.9} />
+              {t.label}
+            </button>
+          );
+        })}
       </div>
 
       {active === "composes" && <CompoundTool />}

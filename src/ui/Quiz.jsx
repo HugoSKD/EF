@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ClipboardList, Check, X, Target, ThumbsUp, RotateCcw } from "lucide-react";
 import { T } from "../theme.js";
 
 export default function Quiz({ questions, color = T.brand, onComplete }) {
@@ -31,16 +32,24 @@ export default function Quiz({ questions, color = T.brand, onComplete }) {
     const total = questions.length;
     const ratio = finalScore / total;
     const verdict =
-      ratio === 1 ? { t: "Sans-faute ! 🎯", c: T.brand, msg: "Tu as parfaitement assimilé cette leçon." } :
-      ratio >= 0.7 ? { t: "Très bien 👏", c: T.brand2, msg: "Tu maîtrises les notions essentielles." } :
-      ratio >= 0.4 ? { t: "Pas mal", c: T.accent, msg: "Quelques notions à revoir, n'hésite pas à relire les passages clés." } :
-      { t: "À retravailler", c: T.coral, msg: "Reprends la leçon plus calmement, les concepts en valent la peine." };
+      ratio === 1 ? { t: "Sans-faute", VIcon: Target, c: T.brand, msg: "Tu as parfaitement assimilé cette leçon." } :
+      ratio >= 0.7 ? { t: "Très bien", VIcon: ThumbsUp, c: T.brand2, msg: "Tu maîtrises les notions essentielles." } :
+      ratio >= 0.4 ? { t: "Pas mal", VIcon: null, c: T.accent, msg: "Quelques notions à revoir, n'hésite pas à relire les passages clés." } :
+      { t: "À retravailler", VIcon: null, c: T.coral, msg: "Reprends la leçon plus calmement, les concepts en valent la peine." };
+    const VIcon = verdict.VIcon;
     return (
       <div style={{ background: T.bgSoft, border: `1px solid ${verdict.c}55`, borderRadius: 18, padding: 26, margin: "24px 0" }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: verdict.c, letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 10 }}>📝 Quiz terminé</div>
-        <div style={{ fontFamily: T.serif, fontSize: 28, fontWeight: 600, color: T.text, marginBottom: 6 }}>{finalScore} / {total} — {verdict.t}</div>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 700, color: verdict.c, letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 10 }}>
+          <ClipboardList size={14} strokeWidth={2} /> Quiz terminé
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: T.serif, fontSize: 28, fontWeight: 600, color: T.text, marginBottom: 6 }}>
+          {finalScore} / {total} — {verdict.t}
+          {VIcon && <VIcon size={26} strokeWidth={2} color={verdict.c} />}
+        </div>
         <div style={{ fontSize: 15, color: T.textDim, lineHeight: 1.6, marginBottom: 16 }}>{verdict.msg}</div>
-        <button onClick={restart} style={{ background: "transparent", color: verdict.c, border: `1.5px solid ${verdict.c}`, borderRadius: 10, padding: "10px 18px", fontWeight: 700, cursor: "pointer" }}>↻ Refaire le quiz</button>
+        <button onClick={restart} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: verdict.c, border: `1.5px solid ${verdict.c}`, borderRadius: 10, padding: "10px 18px", fontWeight: 700, cursor: "pointer" }}>
+          <RotateCcw size={15} strokeWidth={2.2} /> Refaire le quiz
+        </button>
       </div>
     );
   }
@@ -48,7 +57,9 @@ export default function Quiz({ questions, color = T.brand, onComplete }) {
   return (
     <div style={{ background: T.bgSoft, border: `1px solid ${color}33`, borderRadius: 18, padding: 26, margin: "24px 0" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-        <span style={{ fontSize: 13, fontWeight: 700, color, letterSpacing: 0.5, textTransform: "uppercase" }}>📝 Quiz · Question {idx + 1}/{questions.length}</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13, fontWeight: 700, color, letterSpacing: 0.5, textTransform: "uppercase" }}>
+          <ClipboardList size={14} strokeWidth={2} /> Quiz · Question {idx + 1}/{questions.length}
+        </span>
         <div style={{ display: "flex", gap: 4 }}>
           {questions.map((_, i) => (
             <span key={i} style={{ width: 22, height: 4, borderRadius: 2, background: i <= idx ? color : "rgba(255,255,255,0.1)", transition: "background .3s" }} />
@@ -84,8 +95,8 @@ export default function Quiz({ questions, color = T.brand, onComplete }) {
                 {String.fromCharCode(65 + i)}
               </span>
               <span style={{ flex: 1 }}>{opt}</span>
-              {isCorrect && <span style={{ color: T.brand }}>✓</span>}
-              {isWrong && <span style={{ color: T.coral }}>✗</span>}
+              {isCorrect && <Check size={18} strokeWidth={3} color={T.brand} />}
+              {isWrong && <X size={18} strokeWidth={3} color={T.coral} />}
             </button>
           );
         })}

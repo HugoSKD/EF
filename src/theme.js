@@ -1,3 +1,7 @@
+import {
+  BarChart3, Sprout, TrendingUp, Landmark, Home, Bitcoin, Calculator, BookOpen,
+} from "lucide-react";
+
 export const T = {
   bg: "#0B1120",
   bgSoft: "#111A2E",
@@ -29,14 +33,14 @@ export const PAGES = [
 ];
 
 export const THEME = {
-  budget: { c: T.brand2, emoji: "📊", tag: "Les fondamentaux", title: "Maîtriser son budget", intro: "Le budget est la fondation de toute santé financière. Choisis une thématique pour l'approfondir à ton rythme." },
-  epargne: { c: T.brand, emoji: "🌱", tag: "Faire fructifier", title: "Épargner intelligemment", intro: "Transformer l'épargne en système plutôt qu'en effort de volonté. Quatre thématiques pour tout comprendre." },
-  invest: { c: T.coral, emoji: "📈", tag: "Les marchés", title: "Comprendre l'investissement", intro: "Comprendre les outils, les principes et les pièges — jamais pour te dire quoi acheter. Choisis ton sujet." },
-  fiscalite: { c: T.accent, emoji: "🏛️", tag: "Impôts & enveloppes", title: "Comprendre la fiscalité", intro: "Comment l'État prélève sur tes revenus et tes placements — et les enveloppes qui changent la donne sur le long terme." },
-  credit: { c: T.brand2, emoji: "🏠", tag: "Emprunter sans se piéger", title: "Crédit et endettement", intro: "Mensualité, TAEG, capacité d'emprunt, surendettement : les mécaniques à comprendre avant de signer." },
-  crypto: { c: T.violet, emoji: "🪙", tag: "Technologies financières", title: "Décrypter la crypto & le Web3", intro: "Comprendre comment ça marche, et surtout repérer les pièges. Quatre thématiques pour y voir clair." },
-  outils: { c: T.accent, emoji: "🧮", tag: "Outils interactifs", title: "Boîte à outils", intro: "Quatre simulateurs pour visualiser concrètement les mécanismes financiers — jamais pour te dire quoi faire." },
-  glossaire: { c: T.brand, emoji: "📖", tag: "Lexique", title: "Glossaire", intro: "Tous les termes financiers expliqués sans jargon. Cherche un mot, ou parcours par thème." },
+  budget: { c: T.brand2, Icon: BarChart3, tag: "Les fondamentaux", title: "Maîtriser son budget", intro: "Le budget est la fondation de toute santé financière. Choisis une thématique pour l'approfondir à ton rythme." },
+  epargne: { c: T.brand, Icon: Sprout, tag: "Faire fructifier", title: "Épargner intelligemment", intro: "Transformer l'épargne en système plutôt qu'en effort de volonté. Quatre thématiques pour tout comprendre." },
+  invest: { c: T.coral, Icon: TrendingUp, tag: "Les marchés", title: "Comprendre l'investissement", intro: "Comprendre les outils, les principes et les pièges — jamais pour te dire quoi acheter. Choisis ton sujet." },
+  fiscalite: { c: T.accent, Icon: Landmark, tag: "Impôts & enveloppes", title: "Comprendre la fiscalité", intro: "Comment l'État prélève sur tes revenus et tes placements — et les enveloppes qui changent la donne sur le long terme." },
+  credit: { c: T.brand2, Icon: Home, tag: "Emprunter sans se piéger", title: "Crédit et endettement", intro: "Mensualité, TAEG, capacité d'emprunt, surendettement : les mécaniques à comprendre avant de signer." },
+  crypto: { c: T.violet, Icon: Bitcoin, tag: "Technologies financières", title: "Décrypter la crypto & le Web3", intro: "Comprendre comment ça marche, et surtout repérer les pièges. Quatre thématiques pour y voir clair." },
+  outils: { c: T.accent, Icon: Calculator, tag: "Outils interactifs", title: "Boîte à outils", intro: "Quatre simulateurs pour visualiser concrètement les mécanismes financiers — jamais pour te dire quoi faire." },
+  glossaire: { c: T.brand, Icon: BookOpen, tag: "Lexique", title: "Glossaire", intro: "Tous les termes financiers expliqués sans jargon. Cherche un mot, ou parcours par thème." },
 };
 
 export const euro = (n) => Math.round(n).toLocaleString("fr-FR") + " €";

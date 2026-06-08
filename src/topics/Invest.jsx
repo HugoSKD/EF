@@ -1,4 +1,5 @@
 import React from "react";
+import { Zap, Blocks, Target, Brain } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
 import { RiskBars, VizFrame, VizCaption, FeesImpact } from "../ui/charts.jsx";
@@ -7,7 +8,7 @@ import TopicHub from "./TopicHub.jsx";
 
 const TOPICS = [
   {
-    id: "risque", emoji: "⚡", title: "La loi risque / rendement",
+    id: "risque", Icon: Zap, title: "La loi risque / rendement",
     summary: "La règle fondamentale à intégrer avant tout : pas de rendement élevé sans risque élevé.",
     intro: "Si tu ne retiens qu'une seule chose de tout ce parcours, que ce soit celle-ci.",
     words: 700,
@@ -37,7 +38,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "actifs", emoji: "🧱", title: "Les classes d'actifs",
+    id: "actifs", Icon: Blocks, title: "Les classes d'actifs",
     summary: "Actions, obligations, ETF : ce que tu détiens réellement et pourquoi les ETF reviennent souvent.",
     intro: "Comprendre les briques de base de tout portefeuille d'investissement.",
     words: 850,
@@ -63,7 +64,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "principes", emoji: "🎯", title: "Les principes qui marchent",
+    id: "principes", Icon: Target, title: "Les principes qui marchent",
     summary: "Diversifier, voir long terme, surveiller les frais, investir régulièrement : le consensus des pros.",
     intro: "Quelques principes simples font l'objet d'un large consensus, même chez ceux qui ne sont d'accord sur rien d'autre.",
     words: 850,
@@ -95,7 +96,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "psycho", emoji: "🧠", title: "Psychologie & check-list",
+    id: "psycho", Icon: Brain, title: "Psychologie & check-list",
     summary: "Ton cerveau est ton pire ennemi en bourse. Les biais à connaître et la check-list avant de se lancer.",
     intro: "Investir est autant une affaire de comportement que de chiffres. Voici comment ne pas se saboter.",
     words: 800,

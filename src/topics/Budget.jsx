@@ -1,4 +1,5 @@
 import React from "react";
+import { Wallet, PieChart, Search, LifeBuoy } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
 import { DonutChart, VBars, VizFrame, VizCaption, CashflowDiagram } from "../ui/charts.jsx";
@@ -7,7 +8,7 @@ import TopicHub from "./TopicHub.jsx";
 
 const TOPICS = [
   {
-    id: "flux", emoji: "💸", title: "Comprendre ses flux d'argent",
+    id: "flux", Icon: Wallet, title: "Comprendre ses flux d'argent",
     summary: "Revenus, dépenses fixes et variables : la cartographie de base avant tout le reste.",
     intro: "Avant toute méthode, il faut voir clair : d'où vient l'argent, où il part, et sur quoi tu peux vraiment agir.",
     words: 750,
@@ -39,7 +40,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "503020", emoji: "🥧", title: "La méthode 50/30/20",
+    id: "503020", Icon: PieChart, title: "La méthode 50/30/20",
     summary: "Un cadre simple et visuel pour répartir un revenu net entre besoins, envies et avenir.",
     intro: "Popularisée par Elizabeth Warren, cette méthode propose trois grandes enveloppes pour visualiser un équilibre sain.",
     words: 800,
@@ -76,7 +77,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "suivi", emoji: "🔍", title: "Suivre ses dépenses",
+    id: "suivi", Icon: Search, title: "Suivre ses dépenses",
     summary: "L'exercice du mois : traquer les fuites invisibles et reprendre le contrôle sans se priver.",
     intro: "Le levier le plus puissant et le plus simple. La prise de conscience suffit souvent à changer les comportements.",
     words: 720,
@@ -109,7 +110,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "urgence", emoji: "🛟", title: "Le fonds d'urgence",
+    id: "urgence", Icon: LifeBuoy, title: "Le fonds d'urgence",
     summary: "La réserve de sécurité qui évite l'endettement au premier imprévu. La priorité n°1.",
     intro: "Avant même de penser à épargner pour le plaisir ou à investir, on bâtit son matelas de sécurité.",
     words: 780,

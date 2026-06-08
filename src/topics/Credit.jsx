@@ -1,4 +1,5 @@
 import React from "react";
+import { Crosshair, Home, CreditCard, OctagonAlert } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
 import { LoanBars, VizFrame, VizCaption } from "../ui/charts.jsx";
@@ -7,7 +8,7 @@ import TopicHub from "./TopicHub.jsx";
 
 const TOPICS = [
   {
-    id: "taeg", emoji: "🎯", title: "TAEG : le seul taux qui compte",
+    id: "taeg", Icon: Crosshair, title: "TAEG : le seul taux qui compte",
     summary: "Pourquoi comparer deux crédits avec leur taux nominal est trompeur, et ce que cache vraiment le TAEG.",
     intro: "Le taux affiché en grand n'est jamais le coût réel. Voici ce qu'il faut chercher.",
     words: 750,
@@ -36,7 +37,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "immo", emoji: "🏠", title: "Le crédit immobilier",
+    id: "immo", Icon: Home, title: "Le crédit immobilier",
     summary: "Capacité d'emprunt, apport, durée : ce qui détermine vraiment combien tu peux emprunter.",
     intro: "Le plus gros engagement financier d'une vie. Voici les leviers qui comptent.",
     words: 900,
@@ -77,7 +78,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "conso", emoji: "💳", title: "Crédit conso : pièges à éviter",
+    id: "conso", Icon: CreditCard, title: "Crédit conso : pièges à éviter",
     summary: "Pourquoi les taux à 18 % et le « paye en 4 fois » sont des outils financiers dangereux.",
     intro: "Le crédit à la consommation est utile dans certains cas, désastreux dans beaucoup d'autres.",
     words: 800,
@@ -112,7 +113,7 @@ const TOPICS = [
     ),
   },
   {
-    id: "surendet", emoji: "⛔", title: "Surendettement : comprendre, prévenir, réagir",
+    id: "surendet", Icon: OctagonAlert, title: "Surendettement : comprendre, prévenir, réagir",
     summary: "Comment ça arrive, les signaux d'alerte, et la procédure officielle en France.",
     intro: "Un sujet tabou mais essentiel : 100 000 dossiers sont déposés chaque année en France.",
     words: 850,
