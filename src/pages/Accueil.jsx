@@ -3,11 +3,13 @@ import { Compass, BarChart3, Sprout, TrendingUp, Landmark } from "lucide-react";
 import { T, THEME } from "../theme.js";
 import { Tag, Card, Chapter, P, B, Disclaimer, btn } from "../ui/primitives.jsx";
 import { CountUp } from "../ui/charts.jsx";
+import { AchievementsGrid } from "../ui/Achievements.jsx";
+import { useLocalStorage } from "../hooks.js";
 
 const CARDS = [
   { id: "budget", t: "Maîtriser son budget", d: "Flux, 50/30/20, suivi, fonds d'urgence, renégocier ses contrats.", n: 5 },
-  { id: "epargne", t: "Épargner intelligemment", d: "Épargne vs invest, intérêts composés, supports, inflation, objectifs ciblés.", n: 5 },
-  { id: "invest", t: "Comprendre l'investissement", d: "Risque, classes d'actifs, principes, psychologie, allocation.", n: 5 },
+  { id: "epargne", t: "Épargner intelligemment", d: "Épargne vs invest, intérêts composés, supports, inflation, objectifs, salariale.", n: 6 },
+  { id: "invest", t: "Comprendre l'investissement", d: "Risque, classes d'actifs, principes, psychologie, allocation, ESG/ISR.", n: 6 },
   { id: "fiscalite", t: "Comprendre la fiscalité", d: "Tranches IR, PFU, enveloppes, réductions, déclarer pas à pas.", n: 4 },
   { id: "credit", t: "Crédit & endettement", d: "TAEG, immo, conso, surendettement, découvert & carte maîtrisés.", n: 5 },
   { id: "crypto", t: "Décrypter la crypto & le Web3", d: "Bases, risques, arnaques, esprit critique, premier achat sécurisé.", n: 5 },
@@ -16,7 +18,7 @@ const CARDS = [
 ];
 
 const STATS = [
-  { v: 29, s: "", c: T.brand2, d: "thématiques approfondies" },
+  { v: 31, s: "", c: T.brand2, d: "thématiques approfondies" },
   { v: 6, s: "", c: T.brand, d: "parcours pédagogiques" },
   { v: 7, s: "", c: T.accent, d: "outils interactifs" },
   { v: 50, s: "+", c: T.violet, d: "termes au glossaire" },
@@ -49,6 +51,8 @@ function HeroOrbs() {
 }
 
 export default function Accueil({ go }) {
+  const [read] = useLocalStorage("ef_read_topics_v1", {});
+  const hasProgress = Object.keys(read).length > 0;
   return (
     <div>
       <div style={{ position: "relative", overflow: "hidden", borderRadius: 28, border: `1px solid ${T.line}`, background: `radial-gradient(120% 120% at 0% 0%, ${T.surfaceHi} 0%, ${T.bgSoft} 55%, ${T.bg} 100%)`, padding: "clamp(32px,6vw,72px)", marginBottom: 30 }}>
@@ -80,6 +84,12 @@ export default function Accueil({ go }) {
           </Card>
         ))}
       </div>
+
+      {hasProgress && (
+        <div style={{ marginBottom: 36 }}>
+          <AchievementsGrid readMap={read} />
+        </div>
+      )}
 
       <Chapter n="?" title="Pourquoi ce projet" color={T.brand}>
         <P>Les compétences financières de base sont peu enseignées dans le système éducatif traditionnel. Beaucoup de jeunes gèrent leur premier salaire sans repères, ce qui peut mener au surendettement ou, à l'inverse, à une méfiance totale faute de connaissances. EduFinance vise à <B>réduire cette inégalité d'accès à l'information</B> et à donner à chacun les clés pour décider en conscience.</P>

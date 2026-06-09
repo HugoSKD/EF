@@ -1,5 +1,5 @@
 import React from "react";
-import { Scale, Snowflake, Building2, Flame, Target } from "lucide-react";
+import { Scale, Snowflake, Building2, Flame, Target, Briefcase } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List, Card } from "../ui/primitives.jsx";
 import { GrowthLine, InflationViz, VizFrame, VizCaption, TwoInvestors } from "../ui/charts.jsx";
@@ -161,6 +161,66 @@ TOPICS.push({
       <Quiz color={T.brand} questions={[
         { q: "Tu veux acheter une voiture à 12 000 € dans 30 mois et tu as déjà 1 500 € de côté. Quelle mensualité viser ?", options: ["≈ 200 €/mois", "≈ 350 €/mois", "≈ 500 €/mois", "≈ 800 €/mois"], answer: 1, explain: "(12 000 − 1 500) / 30 = 350 €/mois. Avec des intérêts modestes sur un livret, la mensualité réelle est légèrement inférieure (≈ 340 €). Le calcul reste précis à ~5 %." },
         { q: "Pour un objectif à 8 mois, quel support privilégier ?", options: ["ETF actions", "Livret réglementé", "PER", "Crypto majeure"], answer: 1, explain: "Sur un horizon court, la sécurité prime. Un livret garantit le capital et la disponibilité. Les supports risqués pourraient être en moins-value pile au moment où tu en as besoin." },
+      ]} />
+    </div>
+  ),
+});
+
+TOPICS.push({
+  id: "salariale", Icon: Briefcase, title: "L'épargne salariale",
+  summary: "PEE, PER d'entreprise, abondement employeur : un coup de pouce gratuit que la moitié des salariés laisse passer.",
+  intro: "Si tu es en CDI dans une entreprise de 50+ personnes (et souvent dès 11), tu as probablement accès à des dispositifs très avantageux. Voici comment en profiter.",
+  words: 950,
+  content: (
+    <div>
+      <Chapter n="1" title="Trois dispositifs à connaître" color={T.brand}>
+        <List items={[
+          { t: "PEE — Plan d'Épargne Entreprise", d: "Tu y verses ce que tu veux (avec un plafond de 25 % du salaire brut annuel). Les fonds sont bloqués 5 ans, sauf cas de déblocage anticipé (mariage, achat résidence principale, naissance du 3ᵉ enfant, licenciement…)." },
+          { t: "PER d'entreprise collectif (ex-PERCO)", d: "Même logique mais bloqué jusqu'à la retraite. Sortie possible en capital ou en rente. Sortie anticipée pour acheter sa résidence principale ou en cas d'accident de la vie." },
+          { t: "Intéressement et participation", d: "Primes liées aux résultats de l'entreprise. Versées chaque année. Tu peux les recevoir directement (alors imposables) OU les placer sur ton PEE/PER (alors exonérées d'IR). Le second choix est souvent bien plus avantageux." },
+        ]} color={T.brand} />
+      </Chapter>
+      <Chapter n="2" title="L'abondement : le rendement instantané" color={T.brand}>
+        <P>L'abondement, c'est le complément que <B>l'employeur ajoute</B> à tes versements sur le PEE/PER. La règle est négociée par accord d'entreprise mais souvent :</P>
+        <Card style={{ padding: 20, background: T.bgSoft }}>
+          <div style={{ fontFamily: T.serif, fontSize: 17, color: T.text, marginBottom: 10 }}>« 100 % d'abondement sur les 300 premiers euros versés/an »</div>
+          <div style={{ fontSize: 14, color: T.textDim, lineHeight: 1.6 }}>
+            Tu verses 300 € → l'employeur ajoute 300 € → tu te retrouves avec 600 € sur ton PEE.
+            <B style={{ color: T.brand }}> C'est +100 % de rendement instantané</B>, indépendamment de la performance du fonds derrière.
+            Aucun autre placement légal n'offre cela.
+          </div>
+        </Card>
+        <Note color={T.brand}>Si ton employeur abonde et que tu ne verses rien, tu refuses littéralement de l'argent gratuit. La première démarche : demander à ton RH la note d'information PEE/PER.</Note>
+      </Chapter>
+      <Chapter n="3" title="Une fiscalité ultra-avantageuse" color={T.brand}>
+        <P>L'épargne salariale combine plusieurs avantages fiscaux rarement réunis :</P>
+        <List items={[
+          { t: "Versements exonérés d'IR", d: "L'intéressement et la participation placés sur le PEE/PER ne sont pas soumis à l'impôt sur le revenu (juste aux prélèvements sociaux à la source via le forfait social pour l'employeur, ou à la CSG/CRDS côté salarié)." },
+          { t: "Abondement non imposable", d: "Tant qu'il reste dans certaines limites (3 768 € par an environ en 2025-2026 pour le PEE)." },
+          { t: "Gains exonérés d'IR à la sortie", d: "Les plus-values réalisées dans le PEE/PER sont exonérées d'impôt à la sortie (seuls 17,2 % de prélèvements sociaux restent dus)." },
+        ]} color={T.brand} />
+      </Chapter>
+      <Chapter n="4" title="Choisir ses supports" color={T.brand}>
+        <P>Dans ton PEE/PER, tu peux choisir entre plusieurs fonds. Les options classiques :</P>
+        <List items={[
+          { t: "Fonds monétaire / sécuritaire", d: "Rendement faible mais capital garanti. Adapté si la sortie est prévue dans 1-2 ans (achat immo)." },
+          { t: "Fonds diversifié équilibré", d: "Mix actions + obligations. Bon compromis pour horizon 3-7 ans." },
+          { t: "Fonds actions / dynamique", d: "Plus volatil mais plus rémunérateur sur 8 ans+. Adapté au PER (horizon retraite)." },
+          { t: "Actionnariat salarié", d: "Actions de ta propre entreprise, souvent avec une décote de 20-30 % à l'achat. ATTENTION : concentre tes œufs dans le même panier (ton salaire ET tes actions dépendent de l'entreprise). À utiliser modérément." },
+        ]} color={T.brand} />
+        <DeepDive title="Le piège de l'actionnariat salarié massif">L'exemple historique : les salariés Enron qui détenaient massivement des actions de leur propre entreprise sur leur 401(k) américain. Quand l'entreprise a fait faillite en 2001, ils ont perdu simultanément leur emploi ET leur épargne retraite. La règle prudentielle : ne pas dépasser <B>10 % de son patrimoine investi</B> en actions de son propre employeur, même avec décote.</DeepDive>
+      </Chapter>
+      <Chapter n="5" title="Que faire en cas de départ ?" color={T.brand}>
+        <P>Quand tu quittes l'entreprise (démission, licenciement, fin de contrat) :</P>
+        <List items={[
+          "Ton PEE reste accessible : tu peux le garder en l'état (les frais te sont facturés en cas de départ) ou demander le déblocage anticipé.",
+          "Tu peux transférer ton PER d'entreprise vers un PER individuel — souvent une bonne idée pour reprendre le contrôle des supports.",
+          "Le départ de l'entreprise est lui-même un motif de déblocage anticipé du PEE (en cas de rupture du contrat de travail).",
+        ]} color={T.brand} />
+      </Chapter>
+      <Quiz color={T.brand} questions={[
+        { q: "Ton employeur propose 100 % d'abondement sur tes 200 premiers euros versés sur le PEE. Tu verses 200 €. Combien retrouves-tu sur ton PEE ?", options: ["200 €", "300 €", "400 €", "100 €"], answer: 2, explain: "200 € versés + 200 € d'abondement = 400 €. C'est l'équivalent d'un rendement instantané de +100 %, immédiatement. Aucun placement classique ne peut s'aligner sur ce coup de pouce gratuit." },
+        { q: "Quelle est la principale différence entre PEE et PER d'entreprise ?", options: ["Le PEE est réservé aux cadres", "Le PEE se débloque après 5 ans, le PER à la retraite (sauf cas exceptionnels)", "Le PER ne propose pas d'abondement", "Aucune différence"], answer: 1, explain: "Le PEE est plus liquide (5 ans) que le PER (bloqué jusqu'à la retraite, sauf achat de résidence principale ou accidents de la vie). Les deux peuvent recevoir abondement, intéressement et participation." },
       ]} />
     </div>
   ),

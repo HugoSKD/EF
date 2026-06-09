@@ -13,15 +13,39 @@ import ScrollProgress from "./ui/ScrollProgress.jsx";
 import BackToTop from "./ui/BackToTop.jsx";
 import Logo from "./ui/Logo.jsx";
 import Conditions from "./pages/Conditions.jsx";
+import CommandPalette from "./ui/CommandPalette.jsx";
+import { BADGES, BadgeToast, getUnlockedIds } from "./ui/Achievements.jsx";
+import { useLocalStorage } from "./hooks.js";
 
 export default function App() {
   const [page, setPage] = useState("accueil");
   const [topic, setTopic] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [read] = useLocalStorage("ef_read_topics_v1", {});
+  const [seenBadges, setSeenBadges] = useLocalStorage("ef_seen_badges_v1", []);
+  const [pendingBadge, setPendingBadge] = useState(null);
 
-  const go = (p) => { setPage(p); setTopic(null); setMenuOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const go = (p, t = null) => {
+    setPage(p);
+    setTopic(t);
+    setMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const openTopic = (id) => { setTopic(id); window.scrollTo({ top: 0, behavior: "smooth" }); };
   const backToTopics = () => { setTopic(null); window.scrollTo({ top: 0, behavior: "smooth" }); };
+
+  // Détection des nouveaux badges débloqués
+  useEffect(() => {
+    const unlockedNow = getUnlockedIds(read);
+    const newlyUnlocked = unlockedNow.filter((id) => !seenBadges.includes(id));
+    if (newlyUnlocked.length > 0) {
+      const badge = BADGES.find((b) => b.id === newlyUnlocked[0]);
+      if (badge) {
+        setPendingBadge(badge);
+        setSeenBadges([...new Set([...seenBadges, ...newlyUnlocked])]);
+      }
+    }
+  }, [read, seenBadges, setSeenBadges]);
 
   useEffect(() => {
     const id = "ef-fonts";
@@ -79,7 +103,7 @@ export default function App() {
             </span>
           </button>
 
-          <nav className="ef-nav-desktop" style={{ display: "flex", gap: 2, marginLeft: "auto", flexWrap: "wrap" }}>
+          <nav className="ef-nav-desktop" style={{ display: "flex", gap: 2, marginLeft: "auto", flexWrap: "wrap", alignItems: "center" }}>
             {PAGES.map((p) => (
               <button key={p.id} onClick={() => go(p.id)} style={{
                 background: page === p.id ? T.surfaceHi : "transparent",
@@ -88,6 +112,9 @@ export default function App() {
                 fontSize: 14, fontWeight: 600, cursor: "pointer", transition: "all .2s"
               }}>{p.label}</button>
             ))}
+            <div style={{ marginLeft: 8 }}>
+              <CommandPalette onNavigate={(p, t) => go(p, t)} />
+            </div>
           </nav>
 
           <button className="ef-nav-burger" aria-label="Menu"
@@ -115,7 +142,7 @@ export default function App() {
         )}
       </header>
 
-      <main style={{ maxWidth: 1200, margin: "0 auto", padding: "34px 22px 64px" }}>{render()}</main>
+      <main key={`${page}-${topic}`} className="ef-page" style={{ maxWidth: 1200, margin: "0 auto", padding: "34px 22px 64px" }}>{render()}</main>
 
       <footer style={{ borderTop: `1px solid ${T.line}`, background: T.bgSoft }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "34px 22px", display: "flex", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
@@ -145,9 +172,6 @@ export default function App() {
             <button onClick={() => go("conditions")} style={{ all: "unset", cursor: "pointer", fontSize: 13.5, color: T.textDim }}>
               Conditions d'utilisation
             </button>
-            <a href="https://github.com/HugoSKD/EF" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13.5, color: T.textDim, textDecoration: "none" }}>
-              Code source (GitHub) ↗
-            </a>
             <a href="mailto:hugo.heymes@viacesi.fr" style={{ fontSize: 13.5, color: T.textDim, textDecoration: "none" }}>
               Contact
             </a>
@@ -159,6 +183,8 @@ export default function App() {
       </footer>
 
       <BackToTop />
+
+      {pendingBadge && <BadgeToast badge={pendingBadge} onClose={() => setPendingBadge(null)} />}
 
       <style>{`
         input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:${T.brand}; cursor:pointer; box-shadow:0 0 0 4px rgba(94,232,196,0.2); }
@@ -172,6 +198,15 @@ export default function App() {
         @keyframes efFloat1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-20px,30px)} }
         @keyframes efFloat2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-20px)} }
         @keyframes efFloat3 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(20px,20px) scale(1.1)} }
+        @keyframes ef-fade-in { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes ef-pop-in { from { opacity: 0; transform: translateX(-50%) translateY(-10px) scale(.96); } to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); } }
+        @keyframes ef-page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .ef-page { animation: ef-page-in .35s cubic-bezier(.22,1,.36,1); }
+        @keyframes ef-confetti { 0% { transform: translate(0,0) rotate(0); opacity: 1; } 100% { transform: translate(var(--dx,0), 80vh) rotate(720deg); opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) {
+          .ef-page, .ef-cmdk-trigger { animation: none !important; }
+          * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+        }
         html { scroll-behavior: smooth; }
         ::selection { background: ${T.brand}55; color: ${T.text}; }
       `}</style>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ClipboardList, Check, X, Target, ThumbsUp, RotateCcw } from "lucide-react";
 import { T } from "../theme.js";
+import Confetti from "./Confetti.jsx";
 
 export default function Quiz({ questions, color = T.brand, onComplete }) {
   const [idx, setIdx] = useState(0);
@@ -38,7 +39,8 @@ export default function Quiz({ questions, color = T.brand, onComplete }) {
       { t: "À retravailler", VIcon: null, c: T.coral, msg: "Reprends la leçon plus calmement, les concepts en valent la peine." };
     const VIcon = verdict.VIcon;
     return (
-      <div style={{ background: T.bgSoft, border: `1px solid ${verdict.c}55`, borderRadius: 18, padding: 26, margin: "24px 0" }}>
+      <div style={{ background: T.bgSoft, border: `1px solid ${verdict.c}55`, borderRadius: 18, padding: 26, margin: "24px 0", position: "relative" }}>
+        <Confetti active={ratio === 1} />
         <div style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 700, color: verdict.c, letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 10 }}>
           <ClipboardList size={14} strokeWidth={2} /> Quiz terminé
         </div>

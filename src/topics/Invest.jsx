@@ -1,7 +1,7 @@
 import React from "react";
-import { Zap, Blocks, Target, Brain, LayoutGrid } from "lucide-react";
+import { Zap, Blocks, Target, Brain, LayoutGrid, Leaf } from "lucide-react";
 import { T } from "../theme.js";
-import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
+import { Chapter, P, B, Note, DeepDive, List, Card } from "../ui/primitives.jsx";
 import { RiskBars, VizFrame, VizCaption, FeesImpact, DonutChart } from "../ui/charts.jsx";
 import Quiz from "../ui/Quiz.jsx";
 import TopicHub from "./TopicHub.jsx";
@@ -173,6 +173,61 @@ TOPICS.push({
       <Quiz color={T.coral} questions={[
         { q: "D'après la règle « 100 − âge », quelle part en actions à 30 ans ?", options: ["100 %", "≈ 70 %", "30 %", "0 %"], answer: 1, explain: "100 − 30 = 70 %. À 30 ans avec horizon long, on peut se permettre une forte exposition actions. Le reste va en obligations et cash." },
         { q: "Selon les études classiques (Brinson et al.), qu'est-ce qui explique l'essentiel de la performance long terme ?", options: ["Le timing d'entrée", "Le choix précis des titres", "L'allocation entre classes d'actifs", "Le hasard"], answer: 2, explain: "Plus de 90 % de la variance des rendements est expliquée par l'allocation (% actions / obligations / cash) — pas par le stock-picking ni par le timing. C'est le levier le plus important." },
+      ]} />
+    </div>
+  ),
+});
+
+TOPICS.push({
+  id: "responsable", Icon: Leaf, title: "Investissement responsable (ESG/ISR)",
+  summary: "Investir en accord avec ses valeurs : entre vraie démarche, marketing et greenwashing.",
+  intro: "L'idée séduit beaucoup de jeunes investisseurs. Voici ce que ça veut dire concrètement, et comment trier le sérieux du superficiel.",
+  words: 950,
+  content: (
+    <div>
+      <Chapter n="1" title="Les acronymes essentiels" color={T.coral}>
+        <List items={[
+          { t: "ESG (Environnement, Social, Gouvernance)", d: "Critères extra-financiers qu'un fonds prend en compte en plus du rendement. Une entreprise est notée sur son impact environnemental, ses pratiques sociales et la qualité de sa gouvernance." },
+          { t: "ISR (Investissement Socialement Responsable)", d: "Label français officiel attribué aux fonds appliquant des critères ESG vérifiés. Audit externe annuel." },
+          { t: "Greenfin", d: "Label français plus strict, focalisé sur la transition écologique. Exclut explicitement les énergies fossiles et le nucléaire." },
+          { t: "Finansol", d: "Label finance solidaire — flèche une partie des encours vers des projets à fort impact social (logement, insertion, environnement)." },
+        ]} color={T.coral} />
+      </Chapter>
+      <Chapter n="2" title="Les trois grandes approches" color={T.coral}>
+        <Card style={{ padding: 22, background: T.bgSoft }}>
+          <List items={[
+            { t: "Exclusion (best-out)", d: "Le fonds exclut certains secteurs jugés non responsables (armement, tabac, charbon, jeux d'argent…). Approche défensive, simple à comprendre." },
+            { t: "Sélection (best-in-class)", d: "Le fonds garde les meilleures entreprises de chaque secteur selon des critères ESG, sans en exclure entièrement. Plus fin, mais conserve potentiellement des secteurs polluants." },
+            { t: "Impact investing", d: "Le fonds cible explicitement des projets à impact positif mesurable (énergies renouvelables, accès à l'eau, éducation). C'est l'approche la plus exigeante." },
+          ]} color={T.coral} />
+        </Card>
+      </Chapter>
+      <Chapter n="3" title="Le piège du greenwashing" color={T.coral}>
+        <P>Tous les fonds estampillés « ESG » ou « durable » ne se valent pas. Quelques mauvaises pratiques courantes :</P>
+        <List items={[
+          { t: "Étiquettes auto-attribuées", d: "Un fonds qui se dit « durable » sans aucun label officiel ne respecte parfois aucune contrainte vérifiable." },
+          { t: "Exclusions cosmétiques", d: "Un fonds qui n'exclut « que » les armes controversées (mines antipersonnel, bombes à sous-munitions) garde l'essentiel de l'industrie d'armement classique." },
+          { t: "Mêmes entreprises, ratio inversé", d: "Un ETF « ESG monde » peut contenir 80 % des mêmes entreprises qu'un ETF monde classique, juste pondérées différemment. La différence d'impact réel est marginale." },
+          { t: "Notation ESG hétérogène", d: "Une même entreprise peut être notée AAA par une agence et BB par une autre, selon les pondérations. Il n'existe pas de norme universelle." },
+        ]} color={T.coral} />
+        <DeepDive title="L'exemple éclairant des ETF « ESG monde »">Beaucoup d'ETF « ESG monde » détiennent Apple, Microsoft, Alphabet, Amazon comme principales positions — exactement comme les ETF monde non-ESG. La différence ? Les pondérations sont légèrement réajustées et certaines entreprises de tabac ou d'énergie fossile sont sorties. L'impact carbone du portefeuille est typiquement réduit de 10-30 %, mais le portefeuille n'est pas radicalement différent. C'est mieux que rien — mais loin d'un investissement « propre » au sens strict.</DeepDive>
+      </Chapter>
+      <Chapter n="4" title="Performance : mythe et réalité" color={T.coral}>
+        <P>Question récurrente : <em>investir « responsable » coûte-t-il en rendement ?</em></P>
+        <P>Les méta-analyses récentes (Friede, Busch & Bassen 2015, puis MSCI sur 2010-2023) montrent que la performance des fonds ESG est <B>statistiquement équivalente</B> à celle des fonds classiques sur le long terme. Sur des périodes courtes, on observe des écarts dans les deux sens — en 2022, les fonds excluant le pétrole ont sous-performé temporairement à cause de la flambée des prix de l'énergie.</P>
+        <Note color={T.coral}>Conclusion prudente : le surcoût de rendement n'est ni évident, ni rédhibitoire. Le choix se fait davantage sur les valeurs personnelles que sur l'espérance de gain.</Note>
+      </Chapter>
+      <Chapter n="5" title="Comment vérifier sérieusement" color={T.brand}>
+        <List items={[
+          { t: "Chercher les labels officiels", d: "ISR, Greenfin, Finansol — vérifier que le fonds est sur la liste publique sur lelabelisr.fr, label-greenfin.fr, finansol.org." },
+          { t: "Lire le document d'information clé (DIC)", d: "Section « politique d'investissement durable » obligatoire depuis SFDR (règlement européen). Articles 8 et 9 sont les plus exigeants." },
+          { t: "Regarder les principales positions", d: "Les rapports semestriels listent les 10 principales positions. Si tu reconnais des entreprises douteuses, l'étiquette est trompeuse." },
+          { t: "Comparer le « tracking » carbone", d: "Beaucoup de fonds publient leur empreinte carbone (tonnes CO2/M€ investis). Comparer à un fonds classique te donne une idée concrète de l'écart." },
+        ]} color={T.brand} />
+      </Chapter>
+      <Quiz color={T.coral} questions={[
+        { q: "Qu'est-ce qu'un fonds ISR ?", options: ["Un fonds réservé aux retraités", "Un fonds appliquant des critères ESG vérifiés par un audit externe (label français)", "Un fonds garanti par l'État", "Un fonds 100 % énergie solaire"], answer: 1, explain: "ISR (Investissement Socialement Responsable) est un label français officiel attribué à des fonds qui appliquent des critères Environnement, Social, Gouvernance vérifiés. C'est une garantie minimale mais pas une garantie d'impact maximal." },
+        { q: "Selon les méta-analyses récentes, la performance long terme des fonds ESG vs classiques est :", options: ["Toujours supérieure", "Toujours inférieure", "Statistiquement équivalente sur le long terme", "Garantie par l'État"], answer: 2, explain: "Les études (Friede et al. 2015 + MSCI 2010-2023) montrent une performance équivalente sur le long terme. Le choix se fait donc sur les valeurs personnelles, sans coût significatif attendu en rendement." },
       ]} />
     </div>
   ),

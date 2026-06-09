@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldCheck, FileText, Cookie, Mail, ExternalLink, AlertTriangle } from "lucide-react";
+import { ShieldCheck, FileText, Cookie, Mail, AlertTriangle } from "lucide-react";
 import { T } from "../theme.js";
 import { Tag, Card, Chapter, P, B, Note, Disclaimer } from "../ui/primitives.jsx";
 
@@ -78,9 +78,7 @@ export default function Conditions() {
 
       <Sect n="3" title="Propriété intellectuelle" Icon={FileText} color={T.violet}>
         <P>
-          Les textes, illustrations et visualisations originales de ce site sont la propriété de Hugo HEYMES. Le code source
-          du site est <B>publiquement disponible</B> sur GitHub (<a href="https://github.com/HugoSKD/EF" target="_blank" rel="noopener noreferrer" style={{ color: T.brand }}>HugoSKD/EF</a>)
-          et peut être consulté à des fins pédagogiques.
+          Les textes, illustrations et visualisations originales de ce site sont la propriété de Hugo HEYMES.
         </P>
         <P>
           Les icônes utilisées proviennent de <a href="https://lucide.dev" target="_blank" rel="noopener noreferrer" style={{ color: T.brand }}>Lucide</a> (licence ISC).
@@ -134,17 +132,11 @@ export default function Conditions() {
         </ul>
       </Sect>
 
-      <Sect n="6" title="Contact & contributions" Icon={Mail} color={T.brand}>
+      <Sect n="6" title="Contact" Icon={Mail} color={T.brand}>
         <P>
-          Pour toute question, suggestion d'amélioration ou signalement d'erreur factuelle : <a href="mailto:hugo.heymes@viacesi.fr" style={{ color: T.brand }}>hugo.heymes@viacesi.fr</a>.
+          Pour toute question, suggestion d'amélioration ou signalement d'erreur factuelle :{" "}
+          <a href="mailto:hugo.heymes@viacesi.fr" style={{ color: T.brand }}>hugo.heymes@viacesi.fr</a>.
         </P>
-        <P>
-          Le code étant ouvert, tu peux aussi proposer des corrections via GitHub :
-        </P>
-        <a href="https://github.com/HugoSKD/EF/issues" target="_blank" rel="noopener noreferrer"
-          style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 16px", background: T.surface, border: `1px solid ${T.line}`, borderRadius: 10, color: T.text, fontSize: 14.5, fontWeight: 600, textDecoration: "none", transition: "all .2s" }}>
-          Ouvrir une issue sur GitHub <ExternalLink size={14} />
-        </a>
       </Sect>
 
       <Sect n="7" title="Droit applicable" Icon={FileText} color={T.textDim}>
