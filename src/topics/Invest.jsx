@@ -1,8 +1,8 @@
 import React from "react";
-import { Zap, Blocks, Target, Brain } from "lucide-react";
+import { Zap, Blocks, Target, Brain, LayoutGrid } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
-import { RiskBars, VizFrame, VizCaption, FeesImpact } from "../ui/charts.jsx";
+import { RiskBars, VizFrame, VizCaption, FeesImpact, DonutChart } from "../ui/charts.jsx";
 import Quiz from "../ui/Quiz.jsx";
 import TopicHub from "./TopicHub.jsx";
 
@@ -130,6 +130,53 @@ const TOPICS = [
     ),
   },
 ];
+
+TOPICS.push({
+  id: "allocation", Icon: LayoutGrid, title: "Construire son allocation",
+  summary: "Combien d'actions, combien d'obligations, combien de cash ? Le seul vrai choix d'investisseur.",
+  intro: "Les études convergent : c'est l'allocation entre classes d'actifs — et non le choix précis des titres — qui explique l'essentiel des résultats long terme.",
+  words: 900,
+  content: (
+    <div>
+      <Chapter n="1" title="L'allocation, plus important que le choix des titres" color={T.coral}>
+        <P>Une étude classique (Brinson, Hood, Beebower) attribue <B>plus de 90 % de la variance des rendements d'un portefeuille</B> à son allocation entre grandes classes d'actifs (actions / obligations / cash), et moins de 10 % au choix précis des titres ou au timing d'achat.</P>
+        <P>En clair : passer du temps à choisir « la bonne action » est presque toujours un mauvais usage du temps. Définir une allocation cohérente avec son horizon et sa tolérance au risque est l'arbitrage qui compte vraiment.</P>
+      </Chapter>
+      <Chapter n="2" title="La règle « 100 − âge »" color={T.coral}>
+        <P>Une heuristique vieille mais utile : <B>part en actions ≈ 100 − âge</B>. À 25 ans, ≈ 75 % en actions ; à 50 ans, ≈ 50 %. Le reste est réparti entre obligations et cash.</P>
+        <P>Avec l'allongement de la vie active et la baisse des taux obligataires, beaucoup d'experts proposent désormais <B>110 − âge</B> ou même <B>120 − âge</B> pour des profils tolérants au risque.</P>
+        <VizFrame title="Exemple d'allocation à 25 ans (règle 110 − âge)">
+          <DonutChart data={[
+            { label: "Actions (ETF monde)", value: 75, color: T.coral },
+            { label: "Obligations", value: 15, color: T.brand2 },
+            { label: "Fonds euros / cash", value: 10, color: T.brand },
+          ]} centerLabel="25 ans" centerValue="110−25" />
+          <VizCaption>Profil long terme : forte exposition actions, petit coussin obligataire, liquidité réduite.</VizCaption>
+        </VizFrame>
+      </Chapter>
+      <Chapter n="3" title="Les trois portefeuilles classiques" color={T.coral}>
+        <List items={[
+          { t: "Prudent", d: "20-30 % actions, 50-60 % obligations, 20 % cash. Volatilité faible mais rendement réel parfois proche de zéro après inflation." },
+          { t: "Équilibré (60/40)", d: "60 % actions, 40 % obligations. L'un des portefeuilles les plus étudiés et plus stables, recommandé par nombre d'investisseurs institutionnels." },
+          { t: "Offensif", d: "80-100 % actions. Profil jeune, horizon > 10 ans, capable d'encaisser une baisse temporaire de 30-50 % sans paniquer." },
+        ]} color={T.coral} />
+      </Chapter>
+      <Chapter n="4" title="Rééquilibrer périodiquement" color={T.coral}>
+        <P>Avec le temps, les classes performantes prennent du poids et le portefeuille dérive de la cible. Un rééquilibrage <B>annuel ou semestriel</B> permet de :</P>
+        <List items={[
+          "Conserver le niveau de risque souhaité (sinon on devient « plus actions » que prévu après une bonne année).",
+          "Vendre haut et acheter bas mécaniquement (on allège la classe qui a monté pour renforcer celle qui a baissé).",
+          "S'imposer une discipline qui contre le biais émotionnel.",
+        ]} color={T.coral} />
+        <DeepDive title="La glide path : ajuster avec l'âge">Les fonds « cycle de vie » (target-date funds) appliquent automatiquement une « glide path » : la part actions diminue progressivement à mesure que l'on s'approche d'un objectif (retraite, achat). Le PER en mode « gestion pilotée par horizon » fonctionne ainsi par défaut.</DeepDive>
+      </Chapter>
+      <Quiz color={T.coral} questions={[
+        { q: "D'après la règle « 100 − âge », quelle part en actions à 30 ans ?", options: ["100 %", "≈ 70 %", "30 %", "0 %"], answer: 1, explain: "100 − 30 = 70 %. À 30 ans avec horizon long, on peut se permettre une forte exposition actions. Le reste va en obligations et cash." },
+        { q: "Selon les études classiques (Brinson et al.), qu'est-ce qui explique l'essentiel de la performance long terme ?", options: ["Le timing d'entrée", "Le choix précis des titres", "L'allocation entre classes d'actifs", "Le hasard"], answer: 2, explain: "Plus de 90 % de la variance des rendements est expliquée par l'allocation (% actions / obligations / cash) — pas par le stock-picking ni par le timing. C'est le levier le plus important." },
+      ]} />
+    </div>
+  ),
+});
 
 export default function Invest(p) {
   return <TopicHub pageId="invest" topics={TOPICS} {...p} />;

@@ -11,6 +11,8 @@ import Credit from "./topics/Credit.jsx";
 import Crypto from "./topics/Crypto.jsx";
 import ScrollProgress from "./ui/ScrollProgress.jsx";
 import BackToTop from "./ui/BackToTop.jsx";
+import Logo from "./ui/Logo.jsx";
+import Conditions from "./pages/Conditions.jsx";
 
 export default function App() {
   const [page, setPage] = useState("accueil");
@@ -43,6 +45,7 @@ export default function App() {
       crypto: "Crypto & Web3 · EduFinance",
       outils: "Outils · EduFinance",
       glossaire: "Glossaire · EduFinance",
+      conditions: "Conditions d'utilisation · EduFinance",
     };
     document.title = labels[page] || "EduFinance";
   }, [page]);
@@ -58,6 +61,7 @@ export default function App() {
       case "crypto": return <Crypto {...hubProps} />;
       case "outils": return <Outils />;
       case "glossaire": return <Glossaire />;
+      case "conditions": return <Conditions />;
       default: return <Accueil go={go} />;
     }
   };
@@ -68,9 +72,11 @@ export default function App() {
 
       <header style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(11,17,32,0.82)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${T.line}` }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "14px 22px", display: "flex", alignItems: "center", gap: 16 }}>
-          <button onClick={() => go("accueil")} style={{ all: "unset", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ width: 34, height: 34, borderRadius: 10, background: `linear-gradient(135deg, ${T.brand}, ${T.brand2})`, display: "grid", placeItems: "center", color: T.bg, fontWeight: 800, fontSize: 17 }}>€</span>
-            <span style={{ fontFamily: T.serif, fontSize: 21, fontWeight: 600, letterSpacing: -0.3 }}>EduFinance</span>
+          <button onClick={() => go("accueil")} style={{ all: "unset", cursor: "pointer", display: "flex", alignItems: "center", gap: 11 }}>
+            <Logo size={36} />
+            <span style={{ fontFamily: T.serif, fontSize: 21, fontWeight: 600, letterSpacing: -0.3 }}>
+              Edu<span style={{ color: T.brand }}>Finance</span>
+            </span>
           </button>
 
           <nav className="ef-nav-desktop" style={{ display: "flex", gap: 2, marginLeft: "auto", flexWrap: "wrap" }}>
@@ -115,8 +121,10 @@ export default function App() {
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "34px 22px", display: "flex", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
           <div style={{ maxWidth: 380 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-              <span style={{ width: 28, height: 28, borderRadius: 8, background: `linear-gradient(135deg, ${T.brand}, ${T.brand2})`, display: "grid", placeItems: "center", color: T.bg, fontWeight: 800, fontSize: 14 }}>€</span>
-              <span style={{ fontFamily: T.serif, fontSize: 18, fontWeight: 600 }}>EduFinance</span>
+              <Logo size={30} animated={false} />
+              <span style={{ fontFamily: T.serif, fontSize: 18, fontWeight: 600 }}>
+                Edu<span style={{ color: T.brand }}>Finance</span>
+              </span>
             </div>
             <p style={{ fontSize: 13.5, lineHeight: 1.6, color: T.textFaint, margin: 0 }}>
               Plateforme éducative gratuite et sans publicité. Projet Ingénieur Citoyen — Hugo HEYMES, FISE A3 Info.
@@ -132,9 +140,21 @@ export default function App() {
               </button>
             ))}
           </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <div style={{ fontSize: 11.5, color: T.textFaint, letterSpacing: 0.5, textTransform: "uppercase", fontWeight: 700, marginBottom: 4 }}>À propos</div>
+            <button onClick={() => go("conditions")} style={{ all: "unset", cursor: "pointer", fontSize: 13.5, color: T.textDim }}>
+              Conditions d'utilisation
+            </button>
+            <a href="https://github.com/HugoSKD/EF" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13.5, color: T.textDim, textDecoration: "none" }}>
+              Code source (GitHub) ↗
+            </a>
+            <a href="mailto:hugo.heymes@viacesi.fr" style={{ fontSize: 13.5, color: T.textDim, textDecoration: "none" }}>
+              Contact
+            </a>
+          </div>
         </div>
         <div style={{ borderTop: `1px solid ${T.line}`, padding: "16px 22px", textAlign: "center", fontSize: 12.5, color: T.textFaint }}>
-          © {new Date().getFullYear()} EduFinance · Contenu éducatif — investir comporte des risques.
+          © {new Date().getFullYear()} EduFinance · Projet Ingénieur Citoyen — Hugo HEYMES · Contenu éducatif, investir comporte des risques.
         </div>
       </footer>
 

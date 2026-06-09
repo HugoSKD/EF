@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
-import { Calculator, Snowflake, PieChart, Home, Clock } from "lucide-react";
+import { Calculator, Snowflake, PieChart, Home, Clock, Wallet, Stethoscope, Scale } from "lucide-react";
 import { T, euro } from "../theme.js";
-import { Tag, Card, Note } from "../ui/primitives.jsx";
+import { Tag, Card, Note, B } from "../ui/primitives.jsx";
 import { CashflowDiagram, VizFrame, VizCaption, Legend } from "../ui/charts.jsx";
 
 const TOOLS = [
@@ -9,6 +9,9 @@ const TOOLS = [
   { id: "budget", label: "Budget 50/30/20", Icon: PieChart },
   { id: "credit", label: "Mensualité crédit", Icon: Home },
   { id: "early", label: "Commencer tôt", Icon: Clock },
+  { id: "salaire", label: "Brut → Net", Icon: Wallet },
+  { id: "diag", label: "Diagnostic", Icon: Stethoscope },
+  { id: "pea", label: "PEA vs CTO", Icon: Scale },
 ];
 
 function Slider({ label, value, set, min, max, step, suffix, color = T.brand }) {
@@ -276,6 +279,238 @@ function EarlyTool() {
   );
 }
 
+// ===== Outil 5 : Salaire brut → net =====
+function SalaryTool() {
+  const [brut, setBrut] = useState(2500);
+  const [cadre, setCadre] = useState(false);
+  // Taux moyen de cotisations salariales en France (simplifié 2025/26)
+  const tauxCotis = cadre ? 0.25 : 0.22;
+  const netAvantImpot = brut * (1 - tauxCotis);
+  const [tmi, setTmi] = useState(11);
+  // Approximation simplifiée du PAS (prélèvement à la source) :
+  // 10 % d'abattement, puis application de la TMI sélectionnée
+  const baseImpot = netAvantImpot * 0.9;
+  const impotMensuel = (baseImpot * tmi) / 100;
+  const netApresImpot = netAvantImpot - impotMensuel;
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "minmax(280px,360px) 1fr", gap: 20, alignItems: "start" }} className="ef-calc">
+      <Card style={{ padding: 26 }}>
+        <h3 style={{ margin: "0 0 20px", fontSize: 16, color: T.text, fontWeight: 700 }}>Ton salaire</h3>
+        <Slider label="Salaire BRUT mensuel" value={brut} set={setBrut} min={800} max={10000} step={50} suffix=" €" color={T.brand2} />
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20, padding: "10px 14px", background: T.surface, borderRadius: 10, border: `1px solid ${T.line}` }}>
+          <label style={{ fontSize: 14, color: T.textDim, flex: 1 }}>Statut cadre (cotisations un peu plus élevées)</label>
+          <button onClick={() => setCadre(!cadre)} style={{ background: cadre ? T.brand : T.surfaceHi, color: cadre ? T.bg : T.textDim, border: "none", borderRadius: 99, padding: "5px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>{cadre ? "OUI" : "NON"}</button>
+        </div>
+        <Slider label="Ton taux d'imposition (TMI)" value={tmi} set={setTmi} min={0} max={45} step={1} suffix=" %" color={T.accent} />
+      </Card>
+      <div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))", gap: 12, marginBottom: 16 }}>
+          <Stat label="Salaire brut" value={euro(brut)} color={T.textFaint} />
+          <Stat label="Net avant impôt" value={euro(netAvantImpot)} color={T.brand2} />
+          <Stat label="Impôt PAS estimé" value={"−" + euro(impotMensuel)} color={T.coral} />
+          <Stat label="Net après impôt" value={euro(netApresImpot)} color={T.brand} big />
+        </div>
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 700, color: T.textFaint, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 14, textAlign: "center" }}>Décomposition mensuelle</div>
+          <div style={{ display: "flex", height: 36, borderRadius: 10, overflow: "hidden" }}>
+            <div title={`Cotisations sociales : ${euro(brut - netAvantImpot)}`} style={{ width: `${((brut - netAvantImpot) / brut) * 100}%`, background: T.textFaint, display: "grid", placeItems: "center", color: T.bg, fontWeight: 700, fontSize: 11 }}>
+              Cotisations
+            </div>
+            <div title={`Impôt PAS : ${euro(impotMensuel)}`} style={{ width: `${(impotMensuel / brut) * 100}%`, background: T.coral, display: "grid", placeItems: "center", color: T.bg, fontWeight: 700, fontSize: 11 }}>
+              Impôt
+            </div>
+            <div title={`Net en poche : ${euro(netApresImpot)}`} style={{ width: `${(netApresImpot / brut) * 100}%`, background: T.brand, display: "grid", placeItems: "center", color: T.bg, fontWeight: 700, fontSize: 11 }}>
+              Net
+            </div>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, fontSize: 12, color: T.textFaint }}>
+            <span>{Math.round((brut - netAvantImpot) / brut * 100)} % cotisations</span>
+            <span>{Math.round(impotMensuel / brut * 100)} % impôt</span>
+            <span>{Math.round(netApresImpot / brut * 100)} % en poche</span>
+          </div>
+        </Card>
+        <Note color={T.accent} title="Approximation pédagogique" compact>
+          Calcul simplifié à des fins éducatives. Les cotisations réelles varient selon la convention collective, les avantages
+          en nature, la mutuelle d'entreprise, etc. Pour un calcul précis, consulte ta fiche de paie ou le simulateur officiel sur
+          impots.gouv.fr.
+        </Note>
+      </div>
+    </div>
+  );
+}
+
+// ===== Outil 6 : Diagnostic financier =====
+const DIAG_QUESTIONS = [
+  { id: "urgence", q: "As-tu un fonds d'urgence couvrant au moins 3 mois de dépenses ?", opts: [{ l: "Oui", v: 2 }, { l: "Partiellement (< 3 mois)", v: 1 }, { l: "Non", v: 0 }] },
+  { id: "epargne", q: "Quel pourcentage de tes revenus épargnes-tu chaque mois ?", opts: [{ l: "≥ 20 %", v: 2 }, { l: "5-20 %", v: 1 }, { l: "< 5 % ou rien", v: 0 }] },
+  { id: "dettes", q: "As-tu des dettes à taux élevé (revolving, conso) en cours ?", opts: [{ l: "Aucune", v: 2 }, { l: "Une seule, gérable", v: 1 }, { l: "Plusieurs / situation tendue", v: 0 }] },
+  { id: "auto", q: "Ton épargne est-elle automatisée (virement le jour de la paie) ?", opts: [{ l: "Oui", v: 2 }, { l: "En projet", v: 1 }, { l: "Non", v: 0 }] },
+  { id: "invest", q: "Investis-tu une partie de ton épargne sur le long terme (PEA, AV, ETF…) ?", opts: [{ l: "Oui, allocation pensée", v: 2 }, { l: "Un peu, sans plan clair", v: 1 }, { l: "Non, tout en livret", v: 0 }] },
+  { id: "audit", q: "Quand as-tu audité tes contrats (assurance, mobile, banque) pour la dernière fois ?", opts: [{ l: "Cette année", v: 2 }, { l: "Il y a 1-2 ans", v: 1 }, { l: "Jamais ou ne sais plus", v: 0 }] },
+  { id: "fisca", q: "Comprends-tu ta tranche marginale d'imposition (TMI) ?", opts: [{ l: "Oui, je sais", v: 2 }, { l: "Vaguement", v: 1 }, { l: "Pas du tout", v: 0 }] },
+];
+
+function DiagnosticTool() {
+  const [answers, setAnswers] = useState({});
+  const [done, setDone] = useState(false);
+  const answeredAll = DIAG_QUESTIONS.every((q) => answers[q.id] != null);
+  const score = Object.values(answers).reduce((a, b) => a + b, 0);
+  const max = DIAG_QUESTIONS.length * 2;
+  const pctVal = (score / max) * 100;
+  const verdict =
+    pctVal >= 85 ? { c: T.brand, label: "Excellent", msg: "Ton hygiène financière est solide. Concentre-toi sur l'optimisation long terme et l'allocation d'investissement." } :
+    pctVal >= 65 ? { c: T.brand2, label: "Bon", msg: "Les fondations sont bonnes. Quelques points peuvent être renforcés pour passer au niveau supérieur." } :
+    pctVal >= 40 ? { c: T.accent, label: "À renforcer", msg: "Plusieurs leviers importants sont à activer. Concentre-toi d'abord sur les bases : fonds d'urgence et automatisation." } :
+    { c: T.coral, label: "Priorité aux fondations", msg: "L'essentiel est encore à construire. Commence par les parcours Budget et Épargne — l'investissement vient après." };
+
+  if (done) {
+    return (
+      <Card>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14, flexWrap: "wrap" }}>
+          <div style={{ width: 90, height: 90, borderRadius: "50%", background: `conic-gradient(${verdict.c} ${pctVal * 3.6}deg, rgba(255,255,255,0.06) 0deg)`, display: "grid", placeItems: "center" }}>
+            <div style={{ width: 72, height: 72, borderRadius: "50%", background: T.surface, display: "grid", placeItems: "center", fontFamily: T.serif, fontSize: 22, fontWeight: 700, color: T.text }}>
+              {Math.round(pctVal)}%
+            </div>
+          </div>
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: verdict.c, letterSpacing: 0.5, textTransform: "uppercase" }}>Score : {score}/{max}</div>
+            <div style={{ fontFamily: T.serif, fontSize: 26, fontWeight: 600, color: T.text }}>{verdict.label}</div>
+          </div>
+        </div>
+        <div style={{ fontSize: 15, color: T.textDim, lineHeight: 1.65, marginBottom: 18 }}>{verdict.msg}</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 18 }}>
+          {DIAG_QUESTIONS.map((q) => {
+            const v = answers[q.id];
+            const c = v === 2 ? T.brand : v === 1 ? T.accent : T.coral;
+            return (
+              <div key={q.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: T.bgSoft, borderRadius: 10, borderLeft: `3px solid ${c}` }}>
+                <span style={{ width: 22, height: 22, borderRadius: 99, background: `${c}22`, color: c, display: "grid", placeItems: "center", fontWeight: 800, fontSize: 11, flexShrink: 0 }}>{v}</span>
+                <span style={{ fontSize: 14, color: T.textDim, flex: 1 }}>{q.q}</span>
+              </div>
+            );
+          })}
+        </div>
+        <button onClick={() => { setAnswers({}); setDone(false); }}
+          style={{ background: "transparent", color: verdict.c, border: `1.5px solid ${verdict.c}`, borderRadius: 10, padding: "10px 18px", fontWeight: 700, cursor: "pointer" }}>
+          Refaire le diagnostic
+        </button>
+      </Card>
+    );
+  }
+
+  return (
+    <Card>
+      <div style={{ fontSize: 13, fontWeight: 700, color: T.accent, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>Diagnostic en 7 questions</div>
+      <h3 style={{ fontFamily: T.serif, fontSize: 22, fontWeight: 600, color: T.text, margin: "0 0 18px" }}>Où en es-tu sur les fondations ?</h3>
+      <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+        {DIAG_QUESTIONS.map((q, qi) => (
+          <div key={q.id}>
+            <div style={{ fontSize: 14.5, color: T.text, fontWeight: 600, marginBottom: 8 }}>
+              <span style={{ color: T.textFaint, marginRight: 8 }}>{qi + 1}.</span>{q.q}
+            </div>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              {q.opts.map((opt, oi) => {
+                const picked = answers[q.id] === opt.v;
+                return (
+                  <button key={oi} onClick={() => setAnswers({ ...answers, [q.id]: opt.v })}
+                    style={{
+                      background: picked ? T.accent + "22" : T.surface,
+                      color: picked ? T.text : T.textDim,
+                      border: `1px solid ${picked ? T.accent : T.line}`,
+                      borderRadius: 10,
+                      padding: "8px 14px",
+                      fontSize: 13.5,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      transition: "all .15s",
+                    }}>{opt.l}</button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+      <button disabled={!answeredAll} onClick={() => setDone(true)}
+        style={{ marginTop: 22, background: answeredAll ? T.accent : T.surfaceHi, color: answeredAll ? T.bg : T.textFaint, border: "none", borderRadius: 10, padding: "12px 22px", fontWeight: 700, cursor: answeredAll ? "pointer" : "not-allowed", fontSize: 15 }}>
+        {answeredAll ? "Voir mon diagnostic" : `Réponds aux ${DIAG_QUESTIONS.length - Object.keys(answers).length} questions restantes`}
+      </button>
+    </Card>
+  );
+}
+
+// ===== Outil 7 : PEA vs CTO =====
+function PeaCtoTool() {
+  const [monthly, setMonthly] = useState(200);
+  const [years, setYears] = useState(15);
+  const [grossRate, setGrossRate] = useState(7);
+  const compute = (enveloppe) => {
+    const r = grossRate / 100 / 12;
+    let bal = 0;
+    for (let m = 0; m < years * 12; m++) bal = bal * (1 + r) + monthly;
+    const contrib = monthly * years * 12;
+    const gains = bal - contrib;
+    let tax;
+    if (enveloppe === "pea") {
+      // PEA après 5 ans : exonéré d'IR, soumis aux PS (17,2 %)
+      tax = years >= 5 ? gains * 0.172 : gains * 0.30;
+    } else {
+      // CTO : PFU 30 % chaque cession (approximation : on applique en fin sur les gains totaux)
+      tax = gains * 0.30;
+    }
+    return { bal, contrib, gains, tax, net: bal - tax };
+  };
+  const pea = compute("pea");
+  const cto = compute("cto");
+  const diff = pea.net - cto.net;
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "minmax(280px,360px) 1fr", gap: 20, alignItems: "start" }} className="ef-calc">
+      <Card style={{ padding: 26 }}>
+        <h3 style={{ margin: "0 0 20px", fontSize: 16, color: T.text, fontWeight: 700 }}>Hypothèses</h3>
+        <Slider label="Versement mensuel" value={monthly} set={setMonthly} min={25} max={1000} step={25} suffix=" €" />
+        <Slider label="Durée" value={years} set={setYears} min={1} max={40} step={1} suffix=" ans" />
+        <Slider label="Rendement annuel brut" value={grossRate} set={setGrossRate} min={1} max={12} step={0.5} suffix=" %" />
+        <Note color={T.accent} compact title="Modèle">
+          PEA : exonéré d'impôt après 5 ans, soumis aux prélèvements sociaux (17,2 %). CTO : PFU 30 % (12,8 % IR + 17,2 % PS).
+        </Note>
+      </Card>
+      <div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
+          <Card style={{ borderTop: `3px solid ${T.brand}` }}>
+            <div style={{ fontSize: 12, fontWeight: 700, color: T.brand, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>PEA</div>
+            <div style={{ fontFamily: T.serif, fontSize: 28, fontWeight: 700, color: T.text }}>{euro(pea.net)}</div>
+            <div style={{ fontSize: 12.5, color: T.textDim, marginTop: 6, lineHeight: 1.6 }}>
+              Brut : {euro(pea.bal)}<br />
+              Impôt : −{euro(pea.tax)}<br />
+              Versé : {euro(pea.contrib)}
+            </div>
+          </Card>
+          <Card style={{ borderTop: `3px solid ${T.coral}` }}>
+            <div style={{ fontSize: 12, fontWeight: 700, color: T.coral, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>CTO (PFU 30 %)</div>
+            <div style={{ fontFamily: T.serif, fontSize: 28, fontWeight: 700, color: T.text }}>{euro(cto.net)}</div>
+            <div style={{ fontSize: 12.5, color: T.textDim, marginTop: 6, lineHeight: 1.6 }}>
+              Brut : {euro(cto.bal)}<br />
+              Impôt : −{euro(cto.tax)}<br />
+              Versé : {euro(cto.contrib)}
+            </div>
+          </Card>
+        </div>
+        <Card style={{ background: `linear-gradient(135deg, ${T.brand}10, ${T.brand2}10)` }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: T.brand, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 }}>Économie PEA</div>
+          <div style={{ fontFamily: T.serif, fontSize: 32, fontWeight: 700, color: T.text }}>+{euro(diff)}</div>
+          <div style={{ fontSize: 14, color: T.textDim, marginTop: 6, lineHeight: 1.6 }}>
+            soit <B>{((diff / cto.net) * 100).toFixed(1)} %</B> de capital final en plus pour les mêmes versements, juste grâce à
+            l'enveloppe fiscale. C'est l'illustration concrète de l'intérêt des enveloppes (PEA, AV après 8 ans, PER).
+          </div>
+        </Card>
+        <Note color={T.coral} compact title="Limites du modèle">
+          Calcul simplifié : on applique l'impôt en une seule fois en fin de période. En réalité, le CTO impose à chaque cession,
+          ce qui peut différer selon les arbitrages. Le PEA est plafonné à 150 000 € de versements.
+        </Note>
+      </div>
+    </div>
+  );
+}
+
 export default function Outils() {
   const [active, setActive] = useState("composes");
   return (
@@ -320,6 +555,9 @@ export default function Outils() {
       {active === "budget" && <BudgetTool />}
       {active === "credit" && <LoanTool />}
       {active === "early" && <EarlyTool />}
+      {active === "salaire" && <SalaryTool />}
+      {active === "diag" && <DiagnosticTool />}
+      {active === "pea" && <PeaCtoTool />}
     </div>
   );
 }

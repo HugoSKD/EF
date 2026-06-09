@@ -5,20 +5,20 @@ import { Tag, Card, Chapter, P, B, Disclaimer, btn } from "../ui/primitives.jsx"
 import { CountUp } from "../ui/charts.jsx";
 
 const CARDS = [
-  { id: "budget", t: "Maîtriser son budget", d: "Flux d'argent, méthode 50/30/20, suivi des dépenses, fonds d'urgence.", n: 4 },
-  { id: "epargne", t: "Épargner intelligemment", d: "Épargne vs invest, intérêts composés, supports, inflation & automatisation.", n: 4 },
-  { id: "invest", t: "Comprendre l'investissement", d: "Risque/rendement, classes d'actifs, principes, psychologie & check-list.", n: 4 },
-  { id: "fiscalite", t: "Comprendre la fiscalité", d: "Tranches d'imposition, PFU, enveloppes fiscales, réductions et niches.", n: 3 },
-  { id: "credit", t: "Crédit & endettement", d: "TAEG, capacité d'emprunt, crédit immo, conso, surendettement.", n: 4 },
-  { id: "crypto", t: "Décrypter la crypto & le Web3", d: "Les bases, les risques, repérer les arnaques, garder l'esprit critique.", n: 4 },
-  { id: "outils", t: "Boîte à outils", d: "Calculateur d'intérêts composés, budget, crédit, commencer tôt.", n: 4 },
+  { id: "budget", t: "Maîtriser son budget", d: "Flux, 50/30/20, suivi, fonds d'urgence, renégocier ses contrats.", n: 5 },
+  { id: "epargne", t: "Épargner intelligemment", d: "Épargne vs invest, intérêts composés, supports, inflation, objectifs ciblés.", n: 5 },
+  { id: "invest", t: "Comprendre l'investissement", d: "Risque, classes d'actifs, principes, psychologie, allocation.", n: 5 },
+  { id: "fiscalite", t: "Comprendre la fiscalité", d: "Tranches IR, PFU, enveloppes, réductions, déclarer pas à pas.", n: 4 },
+  { id: "credit", t: "Crédit & endettement", d: "TAEG, immo, conso, surendettement, découvert & carte maîtrisés.", n: 5 },
+  { id: "crypto", t: "Décrypter la crypto & le Web3", d: "Bases, risques, arnaques, esprit critique, premier achat sécurisé.", n: 5 },
+  { id: "outils", t: "Boîte à outils", d: "Intérêts composés, budget, crédit, salaire brut→net, diagnostic, PEA vs CTO…", n: 7 },
   { id: "glossaire", t: "Glossaire", d: "50+ termes financiers expliqués sans jargon.", n: 0 },
 ];
 
 const STATS = [
-  { v: 23, s: "", c: T.brand2, d: "thématiques approfondies" },
+  { v: 29, s: "", c: T.brand2, d: "thématiques approfondies" },
   { v: 6, s: "", c: T.brand, d: "parcours pédagogiques" },
-  { v: 4, s: "", c: T.accent, d: "outils interactifs" },
+  { v: 7, s: "", c: T.accent, d: "outils interactifs" },
   { v: 50, s: "+", c: T.violet, d: "termes au glossaire" },
 ];
 

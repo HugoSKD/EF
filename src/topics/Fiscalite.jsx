@@ -1,5 +1,5 @@
 import React from "react";
-import { Landmark, TrendingDown, Gift } from "lucide-react";
+import { Landmark, TrendingDown, Gift, FileCheck } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
 import { BracketBars, VizFrame, VizCaption, DonutChart } from "../ui/charts.jsx";
@@ -107,6 +107,54 @@ const TOPICS = [
     ),
   },
 ];
+
+TOPICS.push({
+  id: "declarer", Icon: FileCheck, title: "Déclarer ses impôts pas à pas",
+  summary: "Avril-juin : la déclaration. Ce qui est pré-rempli, ce qu'il faut vérifier, ce qu'on ajoute soi-même.",
+  intro: "La déclaration n'est plus optionnelle même pour les non-imposables. Voici la check-list propre pour un jeune actif.",
+  words: 850,
+  content: (
+    <div>
+      <Chapter n="1" title="Le calendrier officiel" color={T.accent}>
+        <P>La campagne de déclaration s'ouvre <B>début avril</B> chaque année sur <a href="https://impots.gouv.fr" target="_blank" rel="noopener noreferrer" style={{ color: T.brand }}>impots.gouv.fr</a>. Les dates limites varient selon ton département (zones 1, 2, 3) — fin mai à mi-juin en général.</P>
+        <Note color={T.coral}>Même si tu es non-imposable, la déclaration reste obligatoire dès tes 18 ans (sauf rattachement au foyer parental). C'est elle qui ouvre les droits à certaines aides (APL, prime d'activité…) et qui produit l'avis d'imposition utile pour le logement.</Note>
+      </Chapter>
+      <Chapter n="2" title="Ce qui est pré-rempli" color={T.accent}>
+        <P>Le fisc reçoit automatiquement la plupart de tes revenus :</P>
+        <List items={[
+          { t: "Salaires", d: "Transmis par l'employeur via la DSN (déclaration sociale nominative)." },
+          { t: "Indemnités Pôle emploi / IJSS", d: "Transmises directement par l'organisme payeur." },
+          { t: "Revenus de placements", d: "Banques et courtiers envoient l'IFU (Imprimé Fiscal Unique). Intérêts, dividendes, plus-values sur PEA/CTO." },
+          { t: "Pensions et retraites", d: "Caisses de retraite, France Travail (anciennement Pôle emploi)…" },
+        ]} color={T.accent} />
+        <Note color={T.accent}>Toujours <B>vérifier</B> les chiffres pré-remplis. Une erreur (cumul incorrect d'un employeur multiple, oubli d'un IFU) reste de ta responsabilité. C'est rare mais ça arrive.</Note>
+      </Chapter>
+      <Chapter n="3" title="Ce qu'il faut ajouter soi-même" color={T.accent}>
+        <List items={[
+          { t: "Revenus fonciers (location)", d: "Régime micro-foncier si loyers < 15 000 €/an, sinon régime réel avec déduction des charges." },
+          { t: "Revenus à l'étranger", d: "Stage rémunéré, dividendes d'un compte étranger : à déclarer même si déjà imposés sur place (conventions fiscales)." },
+          { t: "Versements PER déductibles", d: "Case spécifique à cocher pour bénéficier de la déduction." },
+          { t: "Dons à des associations", d: "Reçus fiscaux à conserver — 66 % ou 75 % de réduction selon l'association." },
+          { t: "Crypto-actifs", d: "Plus-values de cession à déclarer (formulaire 2086), même si la plateforme est étrangère. Les transferts entre tes propres wallets ne sont pas des cessions." },
+          { t: "Frais réels", d: "Option si tes frais professionnels dépassent l'abattement automatique de 10 %. Surtout pertinent en cas de grands trajets domicile-travail." },
+        ]} color={T.accent} />
+      </Chapter>
+      <Chapter n="4" title="Erreurs fréquentes à éviter" color={T.coral}>
+        <List items={[
+          { t: "Oublier de signaler un changement", d: "Mariage, pacs, déménagement, naissance — chaque événement modifie le quotient familial et l'impôt." },
+          { t: "Confondre déclaration et paiement", d: "Le prélèvement à la source ne dispense pas de déclarer. La régularisation finale se fait en septembre." },
+          { t: "Cocher la mauvaise case pour les frais", d: "Soit l'abattement 10 % automatique (rien à faire), soit les frais réels (justificatifs à conserver). Pas les deux." },
+          { t: "Croire qu'on est dispensé", d: "Tu peux être dispensé d'IMPÔT mais pas de DÉCLARATION."},
+        ]} color={T.coral} />
+        <DeepDive title="Et si je me suis trompé après envoi ?">Pas de panique. Une déclaration peut être corrigée en ligne <B>jusqu'à mi-décembre</B> après la campagne. Au-delà, une réclamation est possible jusqu'au 31 décembre de la 2ᵉ année suivante. Les pénalités ne s'appliquent qu'en cas de mauvaise foi caractérisée — une rectification spontanée est bien vue.</DeepDive>
+      </Chapter>
+      <Quiz color={T.accent} questions={[
+        { q: "Tu es étudiant non imposable. Dois-tu quand même déclarer ?", options: ["Non, c'est inutile", "Oui, c'est obligatoire dès 18 ans (sauf rattachement au foyer parental)", "Seulement si tu travailles", "Une année sur deux suffit"], answer: 1, explain: "La déclaration est obligatoire dès 18 ans, indépendamment de l'imposition. Elle conditionne plusieurs aides (APL, prime d'activité) et fournit l'avis d'imposition souvent demandé pour le logement." },
+        { q: "Une plus-value sur crypto réalisée via une plateforme étrangère :", options: ["N'est pas imposable en France", "Est imposable et à déclarer (formulaire 2086)", "Est automatiquement transmise au fisc", "Ne concerne que les professionnels"], answer: 1, explain: "Toute plus-value de cession de crypto par un résident fiscal français est imposable (PFU à 30 % par défaut), même si la plateforme est à l'étranger. Le formulaire 2086 doit être joint à la déclaration." },
+      ]} />
+    </div>
+  ),
+});
 
 export default function Fiscalite(p) {
   return <TopicHub pageId="fiscalite" topics={TOPICS} {...p} />;

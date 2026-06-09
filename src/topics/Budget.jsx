@@ -1,5 +1,5 @@
 import React from "react";
-import { Wallet, PieChart, Search, LifeBuoy } from "lucide-react";
+import { Wallet, PieChart, Search, LifeBuoy, FileSearch } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
 import { DonutChart, VBars, VizFrame, VizCaption, CashflowDiagram } from "../ui/charts.jsx";
@@ -145,6 +145,52 @@ const TOPICS = [
     ),
   },
 ];
+
+TOPICS.push({
+  id: "renegocier", Icon: FileSearch, title: "Renégocier ses contrats",
+  summary: "Le rendement caché : 1 heure par an de comparaison peut libérer plusieurs centaines d'euros.",
+  intro: "Chaque contrat récurrent (assurance, mutuelle, énergie, internet, banque) est renégociable. C'est l'un des meilleurs ROI temps/argent qui existe.",
+  words: 850,
+  content: (
+    <div>
+      <Chapter n="1" title="Pourquoi ça marche systématiquement" color={T.brand2}>
+        <P>Les contrats récurrents sont presque tous indexés sur des prix de marché qui bougent constamment. À l'inscription, tu paies le tarif du moment. <B>Trois ans plus tard, ce tarif est obsolète</B> — souvent à ton désavantage, car l'opérateur n'a aucun intérêt à te le signaler.</P>
+        <P>Comparer ne signifie pas forcément changer. Un simple appel argumenté « j'ai vu une offre concurrente à X € » suffit souvent à déclencher une remise de la part de ton fournisseur actuel.</P>
+      </Chapter>
+      <Chapter n="2" title="Les six postes les plus rentables" color={T.brand2}>
+        <List items={[
+          { t: "Assurance auto / habitation", d: "Loi Hamon : résiliation possible à tout moment après 1 an, le nouvel assureur s'occupe des démarches. Gain moyen : 100 à 300 €/an." },
+          { t: "Mutuelle santé", d: "Comparer les garanties réellement utiles (selon ton profil). Une mutuelle « tout option » à 80 €/mois peut souvent être remplacée par une formule équivalente à 45 €/mois pour un jeune actif." },
+          { t: "Forfait mobile et internet", d: "Marché ultra-concurrentiel. Un forfait à 25 €/mois date probablement de 2018 ; les équivalents actuels sont à 10-15 €/mois." },
+          { t: "Énergie (élec + gaz)", d: "Depuis l'ouverture du marché, des dizaines d'offres existent. Outil officiel : comparateur energie-info.fr (médiateur national)." },
+          { t: "Banque", d: "Comparer frais de tenue de compte, carte, virements étranger. Les banques en ligne sont souvent à 0 € de frais courants pour les profils standards." },
+          { t: "Assurance emprunteur (immobilier)", d: "Loi Lemoine : résiliation à tout moment. La déléguer peut faire économiser 5 000 à 15 000 € sur la durée totale du prêt." },
+        ]} color={T.brand2} />
+      </Chapter>
+      <Chapter n="3" title="La méthode du « audit annuel »" color={T.brand2}>
+        <P>Bloque <B>une demi-journée par an</B>, idéalement en janvier (relevés fiscaux disponibles, nouvelles offres déployées) :</P>
+        <List items={[
+          "Liste tous tes contrats récurrents avec leur montant annuel.",
+          "Compare chacun via un comparateur indépendant (UFC-Que Choisir, lesfurets, energie-info pour l'énergie).",
+          "Pour chaque écart > 100 €/an, appelle ton fournisseur actuel avec l'offre concurrente — propose-lui de s'aligner.",
+          "Si refus : change. Les fournisseurs gèrent les transferts entre eux dans 80 % des cas.",
+        ]} color={T.brand2} />
+        <Note color={T.brand2}>Un audit annuel libère en moyenne 400 à 800 € de pouvoir d'achat pour un jeune actif. C'est l'équivalent d'une augmentation de salaire nette d'impôt, obtenue en 3 heures.</Note>
+      </Chapter>
+      <Chapter n="4" title="Les pièges à éviter" color={T.coral}>
+        <List items={[
+          { t: "Le tarif d'appel", d: "Promotion sur 6 ou 12 mois, puis bascule sur un tarif beaucoup plus élevé. Toujours noter dans son agenda la date de fin de promo." },
+          { t: "Les options inutiles", d: "Garantie casse vol mobile pour un téléphone de 4 ans, assistance juridique d'une assurance auto jamais utilisée…" },
+          { t: "La tacite reconduction longue", d: "Un contrat reconduit pour 1 an entier peut être contraignant. Préférer le mois en mois ou les contrats résiliables à tout moment." },
+        ]} color={T.coral} />
+      </Chapter>
+      <Quiz color={T.brand2} questions={[
+        { q: "Quelle loi permet de résilier une assurance auto à tout moment après 1 an ?", options: ["Loi Lemoine", "Loi Hamon", "Loi Pacte", "Loi Madelin"], answer: 1, explain: "La loi Hamon (2014) a introduit la résiliation infra-annuelle après 1 an de souscription pour l'assurance auto et habitation. Le nouvel assureur gère les démarches." },
+        { q: "Quel est le meilleur ROI temps/argent d'un audit annuel des contrats ?", options: ["Quelques euros sur l'année", "Un café offert chez le banquier", "En moyenne 400 à 800 € libérés pour quelques heures de travail", "Une carte de fidélité"], answer: 2, explain: "Pour 3 à 4 heures de travail par an, l'audit libère en moyenne plusieurs centaines d'euros. Aucun placement classique n'offre un tel rendement temps/argent." },
+      ]} />
+    </div>
+  ),
+});
 
 export default function Budget(p) {
   return <TopicHub pageId="budget" topics={TOPICS} {...p} />;

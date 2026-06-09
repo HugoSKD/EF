@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Mountain, AlertTriangle, Compass } from "lucide-react";
+import { Link, Mountain, AlertTriangle, Compass, ShieldCheck } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
 import { VBars, VizFrame, VizCaption, ScamScatter } from "../ui/charts.jsx";
@@ -127,6 +127,67 @@ const TOPICS = [
     ),
   },
 ];
+
+TOPICS.push({
+  id: "premierachat", Icon: ShieldCheck, title: "Premier achat : la check-list sécurité",
+  summary: "Si tu décides de t'y intéresser malgré tout : 10 étapes pour ne pas perdre tes fonds dès le départ.",
+  intro: "Cette thématique ne te dit pas d'investir en crypto. Mais si tu le fais, voici comment ne pas te faire avoir bêtement sur la technique.",
+  words: 900,
+  content: (
+    <div>
+      <Chapter n="1" title="Préalables (à valider AVANT d'acheter)" color={T.brand}>
+        <List items={[
+          "Mon fonds d'urgence (3-6 mois de dépenses) est constitué.",
+          "Je n'investis qu'une somme que je peux perdre totalement sans impact sur mon quotidien.",
+          "La part crypto ne dépasse pas 5 % de mon patrimoine investi.",
+          "J'ai un revenu stable et pas de dette à taux élevé (revolving, conso) en cours.",
+          "Je comprends que les variations de ±30 % sur quelques semaines sont normales et acceptables psychologiquement.",
+        ]} color={T.brand} />
+        <Note color={T.coral}>Si l'une de ces lignes n'est pas validée : reporte. C'est rarement le bon moment qui manque, c'est la situation personnelle qui n'est pas prête.</Note>
+      </Chapter>
+      <Chapter n="2" title="Choisir une plateforme sérieuse" color={T.violet}>
+        <P>En France, exiger une plateforme enregistrée <B>PSAN auprès de l'AMF</B>. La liste officielle est disponible sur le site de l'AMF. Cela ne garantit pas qu'elle ne fera pas faillite (cf. FTX qui était régulé partiellement), mais cela élimine les pires arnaques.</P>
+        <List items={[
+          { t: "Critères positifs", d: "Enregistrement PSAN/MiCA, équipe identifiée, support client réactif, ancienneté > 5 ans, transparence sur les frais." },
+          { t: "Signaux d'alerte", d: "Plateforme nouvelle, frais cachés, retraits soudain « en maintenance », promesse de rendement fixe, présence uniquement sur Telegram/Discord." },
+        ]} color={T.violet} />
+      </Chapter>
+      <Chapter n="3" title="Sécuriser son compte" color={T.brand}>
+        <List items={[
+          { t: "Mot de passe unique et long (20+ caractères)", d: "Générer via un gestionnaire de mots de passe (Bitwarden, 1Password). JAMAIS le réutiliser sur un autre site." },
+          { t: "2FA obligatoire", d: "Pas par SMS (vulnérable au SIM-swapping) mais via une appli (Google Authenticator, Authy) ou idéalement une clé physique (YubiKey)." },
+          { t: "Adresse e-mail dédiée", d: "Crée une e-mail spécifique à tes comptes financiers, jamais utilisée pour les newsletters ou les inscriptions diverses." },
+          { t: "Activer les alertes", d: "Notification à chaque connexion et chaque retrait. Tu détectes une intrusion en quelques minutes." },
+        ]} color={T.brand} />
+      </Chapter>
+      <Chapter n="4" title="Passer son premier ordre" color={T.violet}>
+        <List items={[
+          { t: "Commencer petit", d: "Ton premier achat sert à comprendre la procédure, pas à faire de la performance. 20-50 € suffisent largement." },
+          { t: "Acheter en DCA", d: "Mieux qu'un gros versement en une fois : étaler en versements réguliers (50 € le 1er de chaque mois) lisse le prix d'achat et l'émotion." },
+          { t: "Préférer les actifs majeurs", d: "Bitcoin et Ethereum représentent l'essentiel de la capitalisation. Les « petits tokens » sont la principale source d'arnaques (rug pull, manipulation)." },
+          { t: "Vérifier les frais", d: "Frais de spread + frais de transaction. Sur certaines plateformes grand public, ils dépassent 1,5 % par achat — équivalent à plusieurs années de frais d'ETF en une seule opération." },
+        ]} color={T.violet} />
+      </Chapter>
+      <Chapter n="5" title="Hot wallet vs cold wallet" color={T.brand}>
+        <P>Tant que tes crypto sont sur la plateforme, tu n'en es pas vraiment propriétaire — la plateforme l'est. La règle vieille de la communauté : <em>« Not your keys, not your coins »</em>.</P>
+        <List items={[
+          { t: "Petits montants (< 500 €)", d: "OK de les laisser sur la plateforme PSAN, le risque est limité." },
+          { t: "Montants moyens (500 - 5 000 €)", d: "Envisager un wallet logiciel (MetaMask, Phantom). Tu détiens la clé privée mais l'appareil reste connecté à internet." },
+          { t: "Gros montants", d: "Cold wallet (Ledger, Trezor) : la clé privée ne quitte jamais l'appareil. Le coût (~80 €) est négligeable par rapport au risque évité." },
+        ]} color={T.brand} />
+        <DeepDive title="La seed phrase, encore et toujours">Quel que soit ton wallet, la seed phrase (12 ou 24 mots) est la clé absolue. Règles non négociables : <B>jamais en ligne, jamais en photo, jamais dans un coffre cloud, jamais à un « support technique »</B>. La sauvegarde physique (papier, métal gravé) dans deux endroits distincts est la pratique standard.</DeepDive>
+      </Chapter>
+      <Chapter n="6" title="Déclarer ses gains" color={T.accent}>
+        <P>Les plus-values de cession de crypto par un particulier français sont imposées au <B>PFU de 30 %</B> (sauf option au barème). À déclarer via le formulaire 2086, en complément de la déclaration principale. Voir la thématique « Déclarer ses impôts » de la section Fiscalité.</P>
+        <Note color={T.accent}>Les transferts entre tes propres wallets ne sont PAS des cessions. Seule une conversion en euros, en stablecoin (USDT, USDC) ou un paiement en crypto déclenche l'imposition.</Note>
+      </Chapter>
+      <Quiz color={T.violet} questions={[
+        { q: "Quelle authentification 2FA est la moins sécurisée ?", options: ["Une appli authenticator (Google Authenticator, Authy)", "Une clé physique YubiKey", "Le SMS", "Pas de 2FA du tout (toujours pire)"], answer: 2, explain: "Le SMS est vulnérable au SIM-swapping : un attaquant fait transférer ton numéro vers une autre carte SIM puis intercepte tes codes. Préfère une appli authenticator ou une clé physique." },
+        { q: "Tu détiens 2 000 € en crypto. Où les laisser ?", options: ["Sur une plateforme PSAN (limite raisonnable)", "Sur 3 plateformes différentes", "En cash sous le matelas", "Sur la plateforme inconnue qui m'a contacté en DM"], answer: 0, explain: "Pour ce montant, une plateforme PSAN reconnue reste raisonnable. Au-delà, un wallet personnel (logiciel ou matériel) devient plus pertinent. JAMAIS sur une plateforme inconnue sollicitée par DM — c'est le marqueur d'arnaque le plus universel." },
+      ]} />
+    </div>
+  ),
+});
 
 export default function Crypto(p) {
   return <TopicHub pageId="crypto" topics={TOPICS} {...p} />;

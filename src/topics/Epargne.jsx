@@ -1,5 +1,5 @@
 import React from "react";
-import { Scale, Snowflake, Building2, Flame } from "lucide-react";
+import { Scale, Snowflake, Building2, Flame, Target } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
 import { GrowthLine, InflationViz, VizFrame, VizCaption, TwoInvestors } from "../ui/charts.jsx";
@@ -123,6 +123,48 @@ const TOPICS = [
     ),
   },
 ];
+
+TOPICS.push({
+  id: "objectifs", Icon: Target, title: "Épargner pour un objectif précis",
+  summary: "Voyage, achat immo, mariage : nommer son épargne change tout — et oriente le support à choisir.",
+  intro: "Une épargne sans nom finit toujours par être dépensée. Donner un objectif chiffré et daté multiplie les chances d'aboutir.",
+  words: 820,
+  content: (
+    <div>
+      <Chapter n="1" title="Pourquoi nommer son épargne" color={T.brand}>
+        <P>« Économiser » est trop vague. <B>« Épargner 8 000 € en 24 mois pour l'apport d'un studio »</B> est concret, mesurable, et engage psychologiquement.</P>
+        <P>Les études comportementales montrent qu'un objectif chiffré + une échéance + un compte dédié augmente le taux d'aboutissement de plus de 60 % par rapport à une épargne « générique ».</P>
+        <Note color={T.brand}>Astuce : renomme tes comptes/sous-comptes selon l'objectif (« Voyage Japon 2027 », « Apport immobilier ») dans ton appli bancaire. La friction psychologique pour y piocher devient bien plus forte.</Note>
+      </Chapter>
+      <Chapter n="2" title="Mensualité nécessaire selon l'objectif" color={T.brand}>
+        <P>La règle de base est purement arithmétique :</P>
+        <Card style={{ padding: 20, background: T.bgSoft }}>
+          <div style={{ fontFamily: T.serif, fontSize: 18, color: T.text, marginBottom: 8 }}>Mensualité ≈ (Objectif − Capital initial) / (Durée en mois)</div>
+          <div style={{ fontSize: 14, color: T.textDim, lineHeight: 1.6 }}>
+            Exemple : objectif 8 000 € en 24 mois, capital actuel 1 000 € → (8 000 − 1 000) / 24 = <B style={{ color: T.brand }}>≈ 292 €/mois</B>.
+            Les intérêts sur 2 ans à 3 % réduisent légèrement la mensualité (≈ 280 €), mais l'ordre de grandeur reste valable.
+          </div>
+        </Card>
+      </Chapter>
+      <Chapter n="3" title="Quel support pour quelle échéance" color={T.brand}>
+        <List items={[
+          { t: "0-12 mois (voyage, électroménager…)", d: "Livret réglementé. Disponibilité totale, capital garanti. Le rendement importe peu sur 12 mois." },
+          { t: "1-3 ans (mariage, voiture, déménagement)", d: "Mix livrets + fonds en euros d'assurance-vie. Sécurité prioritaire, mais on accepte un horizon court pour optimiser." },
+          { t: "3-5 ans (apport immobilier)", d: "Fonds en euros majoritairement, avec une petite poche en unités de compte si la tolérance au risque le permet. Au-delà de 5 ans : envisager la part actions." },
+          { t: "5-10 ans (études enfant, retraite anticipée)", d: "Assurance-vie multi-supports, PEA, voire PER selon le profil fiscal. La part actions devient pertinente." },
+        ]} color={T.brand} />
+        <Note color={T.brand}>Plus l'objectif est lointain, plus tu peux te permettre de la volatilité. Plus il est proche, plus la sécurité prime sur le rendement.</Note>
+      </Chapter>
+      <Chapter n="4" title="Le piège du « j'aviserai »" color={T.coral}>
+        <P>Sans objectif daté, l'épargne devient un coussin disponible — et l'humain est conçu pour piocher dans tout coussin disponible. C'est la principale raison pour laquelle <B>les comptes joints ou les comptes uniques fondent</B> alors que les sous-comptes nommés tiennent.</P>
+      </Chapter>
+      <Quiz color={T.brand} questions={[
+        { q: "Tu veux acheter une voiture à 12 000 € dans 30 mois et tu as déjà 1 500 € de côté. Quelle mensualité viser ?", options: ["≈ 200 €/mois", "≈ 350 €/mois", "≈ 500 €/mois", "≈ 800 €/mois"], answer: 1, explain: "(12 000 − 1 500) / 30 = 350 €/mois. Avec des intérêts modestes sur un livret, la mensualité réelle est légèrement inférieure (≈ 340 €). Le calcul reste précis à ~5 %." },
+        { q: "Pour un objectif à 8 mois, quel support privilégier ?", options: ["ETF actions", "Livret réglementé", "PER", "Crypto majeure"], answer: 1, explain: "Sur un horizon court, la sécurité prime. Un livret garantit le capital et la disponibilité. Les supports risqués pourraient être en moins-value pile au moment où tu en as besoin." },
+      ]} />
+    </div>
+  ),
+});
 
 export default function Epargne(p) {
   return <TopicHub pageId="epargne" topics={TOPICS} {...p} />;

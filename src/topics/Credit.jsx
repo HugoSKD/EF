@@ -1,5 +1,5 @@
 import React from "react";
-import { Crosshair, Home, CreditCard, OctagonAlert } from "lucide-react";
+import { Crosshair, Home, CreditCard, OctagonAlert, Banknote } from "lucide-react";
 import { T } from "../theme.js";
 import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
 import { LoanBars, VizFrame, VizCaption } from "../ui/charts.jsx";
@@ -153,6 +153,50 @@ const TOPICS = [
     ),
   },
 ];
+
+TOPICS.push({
+  id: "decouvert", Icon: Banknote, title: "Découvert & carte : usage maîtrisé",
+  summary: "Le découvert autorisé coûte plus cher qu'on ne croit. Et les cartes ont chacune leur logique de coût caché.",
+  intro: "L'usage quotidien des moyens de paiement est rarement enseigné. Voici ce qui se passe vraiment quand tu paies, et combien ça coûte.",
+  words: 850,
+  content: (
+    <div>
+      <Chapter n="1" title="Le découvert : un crédit qui ne dit pas son nom" color={T.coral}>
+        <P>Le découvert autorisé est juridiquement un <B>crédit court terme</B>. Son TAEG est généralement compris entre <B>7 et 16 %</B>, plus des « commissions d'intervention » (8 € par opération hors plafond) plafonnées à 80 €/mois pour les clients ordinaires et 20 €/mois pour les clientèles fragiles.</P>
+        <Note color={T.coral}>Un découvert de 500 € maintenu un mois entier à 14 % de TAEG coûte ≈ 6 € en intérêts. Mais 3 paiements en dépassement à 8 € chacun = 24 € supplémentaires. Le coût réel grimpe vite.</Note>
+      </Chapter>
+      <Chapter n="2" title="Carte de débit vs carte de crédit (différé)" color={T.brand2}>
+        <List items={[
+          { t: "Carte de débit immédiat", d: "L'argent quitte ton compte instantanément. Tu vois ton solde réel à tout moment. Plus simple à gérer pour un débutant." },
+          { t: "Carte de débit différé", d: "Tous les achats du mois sont prélevés en bloc en fin de mois (ou le 1er du mois suivant). Avantage : trésorerie courte sans intérêt si tu paies à temps. Piège : tu perds la perception du solde en temps réel." },
+          { t: "Carte de crédit (revolving) à éviter", d: "Très différente du « différé ». Le solde non remboursé en fin de mois génère des intérêts à 15-20 %. C'est techniquement un crédit renouvelable déguisé. Quasi-jamais utile en France." },
+        ]} color={T.brand2} />
+        <DeepDive title="Le piège franco-français de la « carte gold/platinum »">Les cartes premium coûtent 100 à 200 €/an. Elles donnent accès à des garanties (assurance voyage, assistance) mais celles-ci font souvent doublon avec d'autres contrats que tu as déjà. Avant de payer 150 €/an pour une assurance voyage, vérifie ta carte standard, ton assurance habitation et ta mutuelle — la couverture existe peut-être déjà gratuitement.</DeepDive>
+      </Chapter>
+      <Chapter n="3" title="Frais à connaître absolument" color={T.coral}>
+        <List items={[
+          { t: "Cotisation annuelle de carte", d: "0 € chez les banques en ligne, 30-50 € chez les banques traditionnelles pour une carte standard." },
+          { t: "Frais de tenue de compte", d: "Souvent autour de 2-3 €/mois en banque traditionnelle, 0 € en ligne." },
+          { t: "Frais de retrait hors zone euro", d: "Souvent 2-4 % du montant + frais fixes. Vérifier avant un voyage : certaines néobanques offrent retrait gratuit dans le monde entier (Revolut, N26, Wise…)." },
+          { t: "Virement instantané", d: "Devient gratuit en Europe à partir de 2025 pour la plupart des banques (règlement européen). Vérifier que ta banque applique bien la règle." },
+          { t: "Rejet de prélèvement", d: "Coût autour de 20 € — souvent évitable en demandant un report à ton créancier." },
+        ]} color={T.coral} />
+      </Chapter>
+      <Chapter n="4" title="Bonnes pratiques quotidiennes" color={T.brand}>
+        <List items={[
+          "Activer les notifications de paiement : tu sais en temps réel ce qui sort de ton compte.",
+          "Garder un coussin de ~200 € sur le compte courant pour absorber un prélèvement décalé sans plonger en négatif.",
+          "Si ton compte est régulièrement à découvert : c'est un signe que la structure budgétaire est à revoir, pas que le découvert doit être augmenté.",
+          "Auditer une fois par an les frais bancaires sur le récap annuel (relevé d'informations tarifaires, envoyé en janvier).",
+        ]} color={T.brand} />
+      </Chapter>
+      <Quiz color={T.brand2} questions={[
+        { q: "Le découvert autorisé est :", options: ["Un service gratuit de la banque", "Un crédit court terme avec un TAEG de 7-16 %", "Une réserve d'argent illimitée", "Une avance sur salaire"], answer: 1, explain: "Le découvert est un crédit. Le TAEG est typiquement entre 7 et 16 %, plus des commissions d'intervention. Ne pas le considérer comme « gratuit » — il a un vrai coût." },
+        { q: "Quelle différence essentielle entre carte de débit différé et carte de crédit ?", options: ["Aucune", "Le différé prélève tout en bloc en fin de mois sans intérêt ; le crédit (revolving) facture des intérêts élevés sur le solde", "Le différé est plus cher", "Le crédit a moins de plafond"], answer: 1, explain: "Le différé est un simple décalage de prélèvement sans frais (si tu provisionnes à temps). La carte de crédit (revolving) est un vrai crédit à taux élevé sur le solde non remboursé." },
+      ]} />
+    </div>
+  ),
+});
 
 export default function Credit(p) {
   return <TopicHub pageId="credit" topics={TOPICS} {...p} />;
