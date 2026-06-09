@@ -1,7 +1,7 @@
 import React from "react";
 import { Scale, Snowflake, Building2, Flame, Target } from "lucide-react";
 import { T } from "../theme.js";
-import { Chapter, P, B, Note, DeepDive, List } from "../ui/primitives.jsx";
+import { Chapter, P, B, Note, DeepDive, List, Card } from "../ui/primitives.jsx";
 import { GrowthLine, InflationViz, VizFrame, VizCaption, TwoInvestors } from "../ui/charts.jsx";
 import Quiz from "../ui/Quiz.jsx";
 import TopicHub from "./TopicHub.jsx";
