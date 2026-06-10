@@ -14,10 +14,12 @@ export default function TopicHub({ pageId, topics, openId, onOpen, onBack }) {
   useEffect(() => {
     if (openId == null) return;
     const k = `${pageId}/${openId}`;
-    if (read[k]) return;
-    const t = setTimeout(() => setRead({ ...read, [k]: Date.now() }), 6000);
+    const t = setTimeout(
+      () => setRead((prev) => (prev[k] ? prev : { ...prev, [k]: Date.now() })),
+      6000
+    );
     return () => clearTimeout(t);
-  }, [openId, pageId, read, setRead]);
+  }, [openId, pageId, setRead]);
 
   // Vue leçon
   if (openId != null) {
